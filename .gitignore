@@ -1,0 +1,104 @@
+# Ignore all Quartus generated files and directories
+# leaving project, settings, source, and constraint files
+#
+# Directories to ignore:
+backup/
+db/
+incremental_db/
+output_files/
+.qsys_edit/
+.qatt_db/
+
+# Files to ignore:
+*.bak
+*.cmp
+*.cnf
+*.doc
+*.eqn
+*.fit
+*.ftn
+*.htm
+*.html
+*.log
+*.map
+*.mer
+*.mif
+*.nios2log
+*.rpt
+*.sum
+*.tan
+*.tbl
+*.tcl.bak
+*.tdf
+*.timing
+*.vo
+*.vho
+*.vlg_backannotated
+*.wk
+*.xml
+*.sof
+*.pof
+*.elf
+*.jdi
+*.flash
+*.hws
+*.psdc
+*.qws
+*.cgn
+*.compare
+*.qch
+*.qfo
+*.acwf
+*.sta.rpt
+*.pin_map.html
+*.rcf
+*.smsg
+*.altlog
+*.csv
+*.txt
+*.dat
+
+# ModelSim/Questa files
+transcript
+work/
+.cxl.vhsmc_typ_ver
+.cxl.modelsim.version
+_sim_pro.cxl.a
+_dpi_check.cxl.a
+*.wlf
+*.mti
+*.mpf
+*.qdb
+*.qpg
+
+# Platform Designer files (optional, some prefer to track)
+# Consider tracking .qsys files as they are XML based project files
+# but ignoring the generated components if you regenerate them every time.
+# If you track them, make sure they are generated correctly.
+*.qsys.snapshot/
+*.component_editor.xml
+*.svst
+*.bsf
+*.cmp
+*.v
+*.vhdl
+*.jpg
+*.jpeg
+*.png
+*.pptx
+*.pdf
+*.zip
+*.tar.gz
+*.rar
+
+# Eclipse Nios II IDE files
+.metadata/
+Debug/
+Release/
+makefile
+alt_sys_init.c
+hardware.h
+
+# If you use the generate Tcl file option, you might want to ignore those
+# if you only want to version the source files and the QPF/QSF
+# *.tcl
