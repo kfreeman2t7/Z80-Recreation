@@ -71,26 +71,6 @@ _dpi_check.cxl.a
 *.qdb
 *.qpg
 
-# Platform Designer files (optional, some prefer to track)
-# Consider tracking .qsys files as they are XML based project files
-# but ignoring the generated components if you regenerate them every time.
-# If you track them, make sure they are generated correctly.
-*.qsys.snapshot/
-*.component_editor.xml
-*.svst
-*.bsf
-*.cmp
-*.v
-*.vhdl
-*.jpg
-*.jpeg
-*.png
-*.pptx
-*.pdf
-*.zip
-*.tar.gz
-*.rar
-
 # Eclipse Nios II IDE files
 .metadata/
 Debug/
