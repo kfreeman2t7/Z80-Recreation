@@ -31,9 +31,9 @@ endmodule
 	
 	
 	
-module RF(CLK, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, pc_w, acc_w, flag_w, mem, set_ab, load, rf_ir);
+module RF(CLK, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, pc_w, acc_w, flag_w, load_imm, set_ab, load, rf_ir);
 	parameter data_size = 16;
-	parameter addr_size = 16;
+	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
 	
 	parameter A = 3'b111;
@@ -41,7 +41,7 @@ module RF(CLK, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, p
 	parameter L = 3'b101;
 	
 	//i/o
-	input wire CLK, load, mem, set_ab;
+	input wire CLK, load, load_imm, set_ab;
 	input wire [2:0] addr_sel;
 	input wire [ram_addr_size-1:0] pc_w;
 	input wire [data_size-1:0] acc_w, flag_w, ram_read, rf_ir;
@@ -71,27 +71,34 @@ module RF(CLK, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, p
 	register_mux #(.reg_size(ram_addr_size), .sel_size(2)) addr_mux(ram_read_bus, ram_read_addr, addr_sel);
 	
 	
+	wire load_hl = load_imm;
 	
+	assign reg_arr[3'b110] = (ram_read&{data_size{load_hl}}) | (reg_arr[3'b110]&{data_size{~load_hl}});
+
 	always @(posedge CLK) begin
 		
-		if(mem) begin
-			reg_arr[3'b110] <= ram_read;
-		end
+		//if(load_imm) begin
+		//	reg_arr[3'b110] <= ram_read;
+		//end
 		
 		reg_arr[A] <= acc_w;
-		//reg_arr[F] <= flag_w;
 		
 		wr <= (addr_A == 3'b110);
 		if(load) begin
-			if(addr_A == 3'b110) begin
-				ram_write_data <= reg_arr[addr_B];
-			end else begin
-				reg_arr[addr_A] <= reg_arr[addr_B];
-			end
+			case(addr_A)
+				3'b000: reg_arr[3'b000] <=  reg_arr[addr_B];
+				3'b001: reg_arr[3'b001] <=  reg_arr[addr_B];
+				3'b010: reg_arr[3'b010] <=  reg_arr[addr_B];
+				3'b011: reg_arr[3'b011] <=  reg_arr[addr_B];
+				3'b100: reg_arr[3'b100] <=  reg_arr[addr_B];
+				3'b101: reg_arr[3'b101] <=  reg_arr[addr_B];
+				3'b110: ram_write_data <=  reg_arr[addr_B];
+				3'b111: reg_arr[3'b111] <=  reg_arr[addr_B];
+			endcase
 		end
 	end
 	
-	assign data_read = addr_A;
+	assign data_read = reg_arr[0];
 	
 endmodule
 
@@ -111,23 +118,20 @@ module ALU(CLK,A,B,reg_out,mode,flags_w);
 	assign reg_out = res;
 endmodule
 
-module IDU(CLK,result,inc);
+module IDU(CLK,in,result,inc);
 	parameter bit_size = 16; 
+	
+	parameter NO_OP = 0;
+	parameter INC = 1;
+	parameter DEC = 2;
 	
 	input wire CLK;
 	input wire [2:0] inc;
+	input wire [bit_size-1:0] in;
 	output wire [bit_size-1:0] result;
 	
-	reg [bit_size-1:0] cnt;
-	
-	always @(posedge CLK) begin
-		if(inc == 1) begin
-			cnt <= cnt+1;
-		end else if(inc == 2) begin
-			cnt <= cnt-1;
-		end
-	end
-	
-	assign result = cnt;
+	wire INi = in+1;
+	wire INd = in-1;
+	assign result = in&{bit_size{(inc==NO_OP)}} | INi&{bit_size{(inc==INC)}} | INd&{bit_size{(inc==DEC)}};
 	
 endmodule

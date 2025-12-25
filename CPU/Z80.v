@@ -17,7 +17,7 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	//control signals
 	gb_clock #(.value(6), .half_value(3), .bits(3)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
-	wire core_CLK = ~KEY[0]&~boot_active;//FPGA_CLK1_50&~boot_active;
+	wire core_CLK = core_vCLK&~boot_active;//~KEY[0]&~boot_active;//
 	wire REQ, ACK;
 	
 	//boot logic
