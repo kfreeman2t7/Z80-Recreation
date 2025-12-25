@@ -1,2 +1,1 @@
-ld B, C
-ld C, D
+ld B, 27

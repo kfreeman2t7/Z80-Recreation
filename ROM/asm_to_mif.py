@@ -13,13 +13,14 @@ opcodes = []
 for char in chars:
     opcodes.append(proper_hex(ord(char)))
 
+opcodes.append(0)
 
 header = '''WIDTH = {};
 DEPTH = {};
 ADDRESS_RADIX = HEX;
 DATA_RADIX = HEX;
 
-CONTENT BEGIN'''.format(8, len(opcodes))
+CONTENT BEGIN'''.format(8, 8*len(opcodes))
 
 
 footer = '''END;'''
@@ -28,7 +29,7 @@ addr = 0
 mif = header
 for op in opcodes:
     
-    mif += "\n\t{} : {}".format(proper_hex(addr),op)
+    mif += "\n\t{} : {};".format(proper_hex(addr),op)
 
     addr += 1
 
