@@ -17,13 +17,14 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	//control signals
 	gb_clock #(.value(6), .half_value(3), .bits(3)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
-	wire core_CLK = ~KEY[0]&~boot_active;//core_vCLK&~boot_active;////
+	wire core_CLK = ~KEY[0]&~boot_active;//core_vCLK&~boot_active;
+	wire mem_CLK = ~KEY[0]&(~boot_active) | FPGA_CLK1_50&boot_active;
 	wire REQ, ACK;
 	
 	//boot logic
 	wire boot_active;
 	assign core_to_ram_wren[0] = boot_active;
-	prgm rom(rom_addr, FPGA_CLK1_50, rom_data);
+	prgm rom(rom_addr, mem_CLK, rom_data);
 	copy_rom #(.data_size(data_size), .addr_size(rom_addr_size), .rom_size(14)) boot_rom(FPGA_CLK1_50, 
 	rom_data, 
 	core_to_ram_write_data[0],
@@ -53,7 +54,7 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	arbiter #(.data_size(data_size), .req_addr_size(core_addr_size)) 		rwd_arb(ram_write_data, core_to_ram_write_data, boot_control);
 	arbiter #(.data_size(1), .req_addr_size(core_addr_size)) 		wren_arb(ram_wren, core_to_ram_wren, boot_control);
 	
-	ram dram(FPGA_CLK1_50, ram_write_data, ram_read_addr, ram_write_addr, ram_wren, ram_read_data);
+	ram dram(mem_CLK, ram_write_data, ram_read_addr, ram_write_addr, ram_wren, ram_read_data);
 	
 	
 	

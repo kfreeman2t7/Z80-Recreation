@@ -56,7 +56,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	wire B_w = B;
 	
 	//control registers
-	reg rom_enable, rf_load, load_imm, rf_setab, PC_set_low, PC_set_high, PC_set_dis;
+	reg rom_enable, rf_load, load_imm, rf_setab, PC_set_low = 0, PC_set_high = 0, PC_set_dis = 0, fetch_cnt;
 	reg [1:0] rp_load;
 	wire rf_load_en = rf_load; wire rf_setab_en = rf_setab;
 	
@@ -68,7 +68,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	assign bus_sel = bus_signal;
 	
 	//components
-	RF #(.data_size(N_data), .addr_size(N_reg_addr), .ram_addr_size(N_ram_addr)) reg_file (CLK, rp_addr, rp_read, rp_load, reg_read, ram_wren, ram_write_data, ram_read_data, ram_addr, bus_signal, PC, acc_w, flag_w, load_imm_en, rf_setAB_en, rf_load_en, ir_wire, displacement);
+	RF #(.data_size(N_data), .addr_size(N_reg_addr), .ram_addr_size(N_ram_addr)) reg_file (CLK, rp_addr, rp_read, rp_load, reg_read, ram_wren, ram_write_data, ram_read_data, ram_addr, bus_signal, PC, acc_w, flag_w, load_8, hold_imm, rf_setAB_en, rf_load_en, ir_wire, displacement);
 	ALU #(.bit_size(N_data)) alu (CLK, A, B, acc_w, 2'b0, flag_w);
 	IDU #(.bit_size(N_ram_addr)) PC_idu(CLK, PC, PC_idu_out, PC_idu_op);
 	
@@ -86,22 +86,22 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	typedef enum {
 	C_NOP,
 	C_EX,
-	C_DJNZ,
-	C_JR,
+	C_DJNZ, C_DJNZ_EXEC,
+	C_JR, C_JR_EXEC,
 	C_JR2,
-	C_16BIT_LDIMM, C_16BIT_LDIMM_HI,
+	C_16BIT_LDIMM, C_16BIT_LDIMM_EXEC_LO, C_16BIT_LDIMM_EXEC_HI,
 	C_16BIT_ADDHL,
 	C_LOAD_INDIRECT,
 	C_WRITE_INDIRECT,
-	C_LOAD_INDIRECT_IMM,
-	C_WRITE_INDIRECT_IMM,
+	C_LOAD_INDIRECT_IMM, C_LOAD_INDIRECT_IMM_EXEC,
+	C_WRITE_INDIRECT_IMM, C_WRITE_INDIRECT_IMM_EXEC,
 	C_16BIT_INCDEC,
 	C_INC,
 	C_DEC,
-	C_LOAD_IMM,
+	C_LOAD_IMM, C_LOAD_IMM_EXEC,
 	C_ACC,
 	C_LOAD,
-	C_HALT,
+	C_HALT, C_HALT_EXEC,
 	C_ALU,
 	C_CON_RET,
 	C_POP,
@@ -110,7 +110,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	C_JUMP_HL,
 	C_LD_SP_HL,
 	C_CON_JUMP,
-	C_JUMP_IMM, C_JUMP_IMM_HI,
+	C_JUMP_IMM, C_JUMP_IMM_EXEC_LO, C_JUMP_IMM_EXEC_HI,
 	C_PREFIX_CB,
 	C_OUT,
 	C_IN,
@@ -124,7 +124,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	C_PREFIX_DD,
 	C_PREFIX_ED,
 	C_PREFIX_FD,
-	C_ALU_IMM,
+	C_ALU_IMM, C_ALU_IMM_EXEC,
 	C_RESTART
 	} opcode;
 	
@@ -138,37 +138,51 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	wire [1:0] p = IR_DECODE[5:4];
 	
 	//8 bit immediate/displacement flag
-	wire load_imm_en = (IC == C_WRITE_INDIRECT_IMM 
+	wire load_8 = (IC == C_WRITE_INDIRECT_IMM 
 	|| IC == C_JR
 	|| IC == C_DJNZ
 	|| IC == C_WRITE_INDIRECT_IMM 
 	|| IC == C_LOAD_INDIRECT_IMM 
 	|| IC == C_LOAD_IMM
-	|| IC == C_JUMP_IMM
 	|| IC == C_ALU_IMM
 	|| IC == C_HALT
 	);
 	
-	wire rp_load_1 = (
-	   IC == C_16BIT_LDIMM
-	|| IC == C_JUMP_IMM
+	wire hold_imm = (IC == C_WRITE_INDIRECT_IMM_EXEC
+	|| IC == C_JR_EXEC
+	|| IC == C_DJNZ_EXEC
+	|| IC == C_WRITE_INDIRECT_IMM_EXEC 
+	|| IC == C_LOAD_INDIRECT_IMM_EXEC
+	|| IC == C_LOAD_IMM_EXEC
+	|| IC == C_ALU_IMM_EXEC
+	|| IC == C_HALT_EXEC
 	);
-	
-	wire rp_load_2 = (
-	   IC == C_16BIT_LDIMM_HI
-	|| IC == C_JUMP_IMM_HI
-	);
-	
-	assign rp_load = 2'd0&{2{(!rp_load_1 && !rp_load_2)}} | 2'd1&{2{(rp_load_1 && !rp_load_2)}} | 2'd2&{2{(!rp_load_1 && rp_load_2)}};
 	
 	//16 bit immediate flag
 	wire load_16 = (
 		   IC == C_16BIT_LDIMM
-		|| IC == C_16BIT_LDIMM_HI
 		|| IC == C_JUMP_IMM
-		|| IC == C_JUMP_IMM_HI
 	);
-	wire halt = (bus_sel != BUS_PC) || load_16;
+	
+	wire rp_load_lo = (
+	   IC == C_16BIT_LDIMM_EXEC_LO
+	|| IC == C_JUMP_IMM_EXEC_LO
+	);
+	
+	wire rp_load_hi = (
+	   IC == C_16BIT_LDIMM_EXEC_HI
+	|| IC == C_JUMP_IMM_EXEC_HI
+	);
+	
+	assign rp_load = 2'd0&{2{(!rp_load_lo && !rp_load_hi)}} | 2'd1&{2{(rp_load_lo && !rp_load_hi)}} | 2'd2&{2{(!rp_load_lo && rp_load_hi)}};
+	
+	assign rf_load = (
+		   IC == C_LOAD_IMM
+		|| IC == C_LOAD
+	);
+	
+	
+	wire halt = rp_load_lo || load_16 || load_8;
 	
 	
 	//registers
@@ -190,13 +204,14 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 		//shift IRs
 		if(halt == 0) begin
 			IR_WB <= IR_EXEC;
-			IR_RF <= IR_EXEC;
+			IR_RF <= IR_DECODE;
 			IR_EXEC <= IR_DECODE;
 		end
 		
 		//FETCH + DECODE
-		if(halt) begin end //do nothing
-		else if(load_imm_en || PC_set_dis) begin //skip this instruction
+		if(halt) begin 
+		end //do nothing
+		else if(PC_set_dis) begin //skip this instruction
 			IC <= C_NOP;
 		end else begin
 		case(x)
@@ -267,24 +282,23 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 		//EXEC
 		case(IC)
 			C_NOP: begin
-				rf_load <= 0;
 			 end
 			C_EX: begin
 			 end
 			C_DJNZ: begin
 			 end
 			C_JR: begin
-				rf_load <= 0;
 				PC_set_dis <= 1;
 			 end
 			C_JR2: begin
 			 end
 			C_16BIT_LDIMM: begin
-				rf_load <= 0;
-				IC <= C_16BIT_LDIMM_HI;
+				IC <= C_16BIT_LDIMM_EXEC_LO;
 			 end
-			C_16BIT_LDIMM_HI: begin
-				rf_load <= 0;
+			C_16BIT_LDIMM_EXEC_LO: begin
+				IC <= C_16BIT_LDIMM_EXEC_HI;
+			 end
+			C_16BIT_LDIMM_EXEC_HI: begin
 				IC <= C_NOP;
 			 end
 			C_16BIT_ADDHL: begin
@@ -304,12 +318,11 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 			C_DEC: begin
 			 end
 			C_LOAD_IMM: begin
-				rf_load <= 1;
+				IC <= C_LOAD_IMM_EXEC;
 			 end
 			C_ACC: begin
 			 end
 			C_LOAD: begin
-				rf_load <= 1;
 			 end
 			C_HALT: begin
 			 end
@@ -330,14 +343,12 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 			C_CON_JUMP: begin
 			 end
 			C_JUMP_IMM: begin
-				rf_load <= 0;
 				PC_set_low <= 1;
-				IC <= C_JUMP_IMM_HI;
+				IC <= C_JUMP_IMM_EXEC_LO;
 			 end
-			C_JUMP_IMM_HI: begin
-				rf_load <= 0;
+			C_JUMP_IMM_EXEC_LO: begin
 				PC_set_high <= 1;
-				IC <= C_NOP;
+				IC <= C_JUMP_IMM_EXEC_HI;
 			 end
 			C_PREFIX_CB: begin
 			 end

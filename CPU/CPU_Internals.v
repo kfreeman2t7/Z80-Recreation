@@ -31,7 +31,7 @@ endmodule
 	
 	
 	
-module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, pc_w, acc_w, flag_w, load_imm, set_ab, load, rf_ir, displacement);
+module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, pc_w, acc_w, flag_w, load_imm, hold_imm, set_ab, load, rf_ir, displacement);
 	parameter data_size = 16;
 	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
@@ -42,7 +42,7 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 	parameter HL = 3'b110;
 	
 	//i/o
-	input wire CLK, load, load_imm, set_ab;
+	input wire CLK, load, load_imm, hold_imm, set_ab;
 	input wire [1:0] rp_wren; //0 = off, 1 = low, 2 = high
 	input wire [addr_size-2:0] rp_addr;
 	input wire [ram_addr_size-1:0] pc_w;
@@ -74,10 +74,13 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 	assign ram_write_addr = {reg_arr[H], reg_arr[L]};
 	assign wr_en = wr; assign ram_write = ram_write_data;
 	
+	wire use_bus_hl = addr_B == HL && ~load_imm && ~hold_imm;
+	assign addr_sel = (BUS_PC&{3{~use_bus_hl}}) | (BUS_HL&{3{(use_bus_hl)}});
+	
 	register_mux #(.reg_size(ram_addr_size), .sel_size(2)) addr_mux(ram_read_bus, ram_read_addr, addr_sel);
 	
 	
-	wire load_hl = load_imm;
+	wire load_hl = (load_imm | (addr_B == HL)) && ~hold_imm;
 	
 	assign reg_arr[3'b110] = (ram_read&{8{load_hl}}) | (reg_arr[3'b110]&{8{~load_hl}});
 	wire [data_size-1:0] imm = reg_arr[3'b110];
@@ -98,14 +101,6 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 		reg_arr[A] <= acc_w;
 		
 		wr <= (addr_A == 3'b110);
-		
-		if(addr_B == HL && addr_sel != BUS_HL) begin
-			addr_sel <= BUS_HL;
-		end
-		
-		if(addr_sel == BUS_HL) begin
-			addr_sel <= BUS_PC;
-		end
 		
 		
 		if(load) begin

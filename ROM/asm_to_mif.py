@@ -9,7 +9,7 @@ subprocess.run(retro_assembler_dir+" program.z80.asm")
 data = open("program.bin")
 chars = data.read()
 data.close()
-opcodes = []
+opcodes = [0]
 for char in chars:
     opcodes.append(proper_hex(ord(char)))
 
