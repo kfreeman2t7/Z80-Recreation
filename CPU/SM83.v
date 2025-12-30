@@ -89,7 +89,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	C_DJNZ, C_DJNZ_EXEC,
 	C_JR, C_JR_EXEC,
 	C_JR2,
-	C_16BIT_LDIMM, C_16BIT_LDIMM_EXEC_LO, C_16BIT_LDIMM_EXEC_HI,
+	C_16BIT_LDIMM, C_16BIT_LDIMM_EXEC_HI,
 	C_16BIT_ADDHL,
 	C_LOAD_INDIRECT,
 	C_WRITE_INDIRECT,
@@ -164,10 +164,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 		|| IC == C_JUMP_IMM
 	);
 	
-	wire rp_load_lo = (
-	   IC == C_16BIT_LDIMM_EXEC_LO
-	|| IC == C_JUMP_IMM_EXEC_LO
-	);
+	wire rp_load_lo = load_16;
 	
 	wire rp_load_hi = (
 	   IC == C_16BIT_LDIMM_EXEC_HI
@@ -293,9 +290,6 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 			C_JR2: begin
 			 end
 			C_16BIT_LDIMM: begin
-				IC <= C_16BIT_LDIMM_EXEC_LO;
-			 end
-			C_16BIT_LDIMM_EXEC_LO: begin
 				IC <= C_16BIT_LDIMM_EXEC_HI;
 			 end
 			C_16BIT_LDIMM_EXEC_HI: begin
@@ -344,11 +338,11 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 			 end
 			C_JUMP_IMM: begin
 				PC_set_low <= 1;
-				IC <= C_JUMP_IMM_EXEC_LO;
-			 end
-			C_JUMP_IMM_EXEC_LO: begin
-				PC_set_high <= 1;
 				IC <= C_JUMP_IMM_EXEC_HI;
+			 end
+			C_JUMP_IMM_EXEC_HI: begin
+				PC_set_high <= 1;
+				IC <= C_NOP;
 			 end
 			C_PREFIX_CB: begin
 			 end

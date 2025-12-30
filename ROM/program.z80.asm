@@ -1,3 +1,2 @@
-ld C, 19
-ld B, 45
+ld BC, 0x0409
 ld C, B
