@@ -9,29 +9,32 @@ subprocess.run(retro_assembler_dir+" program.z80.asm")
 data = open("program.bin")
 chars = data.read()
 data.close()
-opcodes = [0]
+opcodes = []
 for char in chars:
     opcodes.append(proper_hex(ord(char)))
 
-opcodes.append(0)
+while len(opcodes) < 2**16-1:
+    opcodes.append(0)
 
 header = '''WIDTH = {};
 DEPTH = {};
 ADDRESS_RADIX = HEX;
 DATA_RADIX = HEX;
 
-CONTENT BEGIN'''.format(8, 8*len(opcodes))
-
+CONTENT BEGIN'''.format(8, len(opcodes))
 
 footer = '''END;'''
 
 addr = 0
 mif = header
+
 for op in opcodes:
     
     mif += "\n\t{} : {};".format(proper_hex(addr),op)
 
     addr += 1
+
+
 
 mif += "\n"+footer
 
@@ -40,3 +43,6 @@ print(mif)
 bytecode = open("program.mif",'w')
 bytecode.write(mif)
 bytecode.close()
+
+subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_cdb --update_mif ..\\Z80")
+subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_asm ..\\Z80")

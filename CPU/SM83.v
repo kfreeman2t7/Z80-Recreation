@@ -5,13 +5,59 @@ parameter BUS_HL = 1;
 //unprefixed opcode classes
 
 
+//opcode states
+	typedef enum {
+	C_NOP,
+	C_EX,
+	C_DJNZ, C_DJNZ_EXEC,
+	C_JR, C_JR_EXEC,
+	C_JR2,
+	C_16BIT_LDIMM, C_16BIT_LDIMM_EXEC_LO, C_16BIT_LDIMM_EXEC_HI,
+	C_16BIT_ADDHL,
+	C_LOAD_INDIRECT,
+	C_WRITE_INDIRECT,
+	C_LOAD_INDIRECT_HL_IMM, C_LOAD_INDIRECT_HL_IMM_EXEC_LO, C_LOAD_INDIRECT_HL_IMM_EXEC_HI,
+	C_WRITE_INDIRECT_HL_IMM, C_WRITE_INDIRECT_HL_IMM_EXEC_LO, C_WRITE_INDIRECT_HL_IMM_EXEC_HI,
+	C_LOAD_INDIRECT_A_IMM, C_LOAD_INDIRECT_A_IMM_EXEC,
+	C_WRITE_INDIRECT_A_IMM, C_WRITE_INDIRECT_A_IMM_EXEC,
+	C_16BIT_INCDEC,
+	C_INC,
+	C_DEC,
+	C_LOAD_IMM, C_LOAD_IMM_EXEC,
+	C_ACC,
+	C_LOAD, C_LOAD_EXEC, //for ld [r], (HL)
+	C_HALT, C_HALT_EXEC,
+	C_ALU,
+	C_CON_RET,
+	C_POP,
+	C_RET,
+	C_EXX,
+	C_JUMP_HL,
+	C_LD_SP_HL,
+	C_CON_JUMP,
+	C_JUMP_IMM, C_JUMP_IMM_EXEC_LO, C_JUMP_IMM_EXEC_HI,
+	C_PREFIX_CB,
+	C_OUT,
+	C_IN,
+	C_EX_SP_HL,
+	C_EX_DE_HL,
+	C_DI,
+	C_EI,
+	C_CON_CALL,
+	C_PUSH,
+	C_CALL,
+	C_PREFIX_DD,
+	C_PREFIX_ED,
+	C_PREFIX_FD,
+	C_ALU_IMM, C_ALU_IMM_EXEC,
+	C_RESTART
+	} opcode;
 
 
 
 
 
-
-module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_data, ram_write_data, reg_read, print);
+module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_data, ram_write_data, reg_read, print, RESET);
 	parameter N_data = 8;
 	parameter N_ram_addr = 16;
 	parameter N_reg_addr = 3;
@@ -20,7 +66,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	
 	
 	
-	input wire CLK;
+	input wire CLK, RESET;
 	
 	output wire [N_data-1:0] reg_read;
 	
@@ -48,6 +94,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	wire [N_data*2-1:0] rp_read;
 	
 	reg [N_ram_addr-1:0] PC;
+	reg [N_data-1:0] PC_low;
 	reg [N_data-1:0] A, B, acc, I, idu_acc;
 	reg [1:0] PC_idu_op = 1; wire [N_ram_addr-1:0] PC_idu_out;
 	
@@ -56,7 +103,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	wire B_w = B;
 	
 	//control registers
-	reg rom_enable, rf_load, load_imm, rf_setab, PC_set_low = 0, PC_set_high = 0, PC_set_dis = 0, fetch_cnt;
+	reg rom_enable, rf_load, load_imm, rf_setab;
 	reg [1:0] rp_load;
 	wire rf_load_en = rf_load; wire rf_setab_en = rf_setab;
 	
@@ -68,7 +115,7 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	assign bus_sel = bus_signal;
 	
 	//components
-	RF #(.data_size(N_data), .addr_size(N_reg_addr), .ram_addr_size(N_ram_addr)) reg_file (CLK, rp_addr, rp_read, rp_load, reg_read, ram_wren, ram_write_data, ram_read_data, ram_addr, bus_signal, PC, acc_w, flag_w, load_8, hold_imm, rf_setAB_en, rf_load_en, ir_wire, displacement);
+	RF #(.data_size(N_data), .addr_size(N_reg_addr), .ram_addr_size(N_ram_addr)) reg_file (CLK, rp_addr, rp_read, rp_load, reg_read, ram_write_data, ram_read_data, ram_addr, bus_signal, PC, acc_w, flag_w, load_8, hold_imm, rf_setAB_en, rf_load_en, ir_wire, displacement);
 	ALU #(.bit_size(N_data)) alu (CLK, A, B, acc_w, 2'b0, flag_w);
 	IDU #(.bit_size(N_ram_addr)) PC_idu(CLK, PC, PC_idu_out, PC_idu_op);
 	
@@ -81,78 +128,33 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 	//precalculated wires
 	wire PC_displacement = {PC[15:8],PC[7:0]+displacement};
 	
-	
-	//opcode states
-	typedef enum {
-	C_NOP,
-	C_EX,
-	C_DJNZ, C_DJNZ_EXEC,
-	C_JR, C_JR_EXEC,
-	C_JR2,
-	C_16BIT_LDIMM, C_16BIT_LDIMM_EXEC_HI,
-	C_16BIT_ADDHL,
-	C_LOAD_INDIRECT,
-	C_WRITE_INDIRECT,
-	C_LOAD_INDIRECT_IMM, C_LOAD_INDIRECT_IMM_EXEC,
-	C_WRITE_INDIRECT_IMM, C_WRITE_INDIRECT_IMM_EXEC,
-	C_16BIT_INCDEC,
-	C_INC,
-	C_DEC,
-	C_LOAD_IMM, C_LOAD_IMM_EXEC,
-	C_ACC,
-	C_LOAD,
-	C_HALT, C_HALT_EXEC,
-	C_ALU,
-	C_CON_RET,
-	C_POP,
-	C_RET,
-	C_EXX,
-	C_JUMP_HL,
-	C_LD_SP_HL,
-	C_CON_JUMP,
-	C_JUMP_IMM, C_JUMP_IMM_EXEC_LO, C_JUMP_IMM_EXEC_HI,
-	C_PREFIX_CB,
-	C_OUT,
-	C_IN,
-	C_EX_SP_HL,
-	C_EX_DE_HL,
-	C_DI,
-	C_EI,
-	C_CON_CALL,
-	C_PUSH,
-	C_CALL,
-	C_PREFIX_DD,
-	C_PREFIX_ED,
-	C_PREFIX_FD,
-	C_ALU_IMM, C_ALU_IMM_EXEC,
-	C_RESTART
-	} opcode;
-	
-	opcode IC; //IC = instruction class
 	//decode wires
 	assign IR_DECODE = ram_read_data;
-	wire [1:0] x = IR_DECODE[7:6];
-	wire [2:0] y = IR_DECODE[5:3];
-	wire [2:0] z = IR_DECODE[2:0];
-	wire q = IR_DECODE[3];
-	wire [1:0] p = IR_DECODE[5:4];
+	
+	//IC decoder
+	opcode IC, ram_IC; //IC = instruction class
+	decoder opcode_decode(IR_DECODE, ir_rf, ram_IC, halt, (ram_addr == PC));
+	wire [N_data-1:0] ir_rf;
+	
+	
 	
 	//8 bit immediate/displacement flag
-	wire load_8 = (IC == C_WRITE_INDIRECT_IMM 
-	|| IC == C_JR
+	wire load_8 = (
+		IC == C_JR
 	|| IC == C_DJNZ
-	|| IC == C_WRITE_INDIRECT_IMM 
-	|| IC == C_LOAD_INDIRECT_IMM 
+	|| IC == C_WRITE_INDIRECT_A_IMM 
+	|| IC == C_LOAD_INDIRECT_A_IMM 
 	|| IC == C_LOAD_IMM
+	|| IC == C_LOAD
 	|| IC == C_ALU_IMM
 	|| IC == C_HALT
 	);
 	
-	wire hold_imm = (IC == C_WRITE_INDIRECT_IMM_EXEC
-	|| IC == C_JR_EXEC
+	wire hold_imm = (
+		IC == C_JR_EXEC
 	|| IC == C_DJNZ_EXEC
-	|| IC == C_WRITE_INDIRECT_IMM_EXEC 
-	|| IC == C_LOAD_INDIRECT_IMM_EXEC
+	|| IC == C_WRITE_INDIRECT_A_IMM_EXEC 
+	|| IC == C_LOAD_INDIRECT_A_IMM_EXEC
 	|| IC == C_LOAD_IMM_EXEC
 	|| IC == C_ALU_IMM_EXEC
 	|| IC == C_HALT_EXEC
@@ -164,229 +166,185 @@ module SM83(CLK, REQ, ACK, ram_wren, ram_read_addr, ram_write_addr, ram_read_dat
 		|| IC == C_JUMP_IMM
 	);
 	
-	wire rp_load_lo = load_16;
+	wire rp_load_lo = (
+			IC == C_16BIT_LDIMM
+	);
 	
 	wire rp_load_hi = (
-	   IC == C_16BIT_LDIMM_EXEC_HI
-	|| IC == C_JUMP_IMM_EXEC_HI
+			IC == C_16BIT_LDIMM_EXEC_LO
+	);
+	
+	wire PC_set_dis = (
+			IC == C_JR
+	);
+	
+	wire PC_set_low = (
+			IC == C_JUMP_IMM
+	);
+	
+	wire PC_set_high = (
+			IC == C_JUMP_IMM_EXEC_LO
 	);
 	
 	assign rp_load = 2'd0&{2{(!rp_load_lo && !rp_load_hi)}} | 2'd1&{2{(rp_load_lo && !rp_load_hi)}} | 2'd2&{2{(!rp_load_lo && rp_load_hi)}};
 	
 	assign rf_load = (
-		   IC == C_LOAD_IMM
-		|| IC == C_LOAD
+		   IC == C_LOAD_IMM_EXEC
+		|| IC == C_LOAD_EXEC
+	);
+	
+	assign ram_wren = (
+		IR_RF[5:3] == 3'b110
 	);
 	
 	
-	wire halt = rp_load_lo || load_16 || load_8;
+	wire halt_16 = load_16 | rp_load_lo | rp_load_hi | PC_set_low | PC_set_high;
+	wire halt_8 = load_8;
+	wire halt =  halt_8 | halt_16;
 	
+	assign rp_addr = IR_RF[5:4];
 	
 	//registers
 	always @(posedge CLK) begin
 		//Manage PC
 		if(PC_set_dis) begin
 			PC <= PC_displacement;
-			PC_set_dis <= 0;
 		end else if(PC_set_low) begin
-			PC[7:0] <= ram_read_data;
-			PC_set_low <= 0;
+			PC_low[7:0] <= ram_read_data;
 		end else if(PC_set_high) begin
-			PC[15:8] <= ram_read_data;
-			PC_set_high <= 0;
+			PC <= {ram_read_data, PC_low};
+		end else if(ram_addr != PC) begin
+			PC <= PC;
 		end else begin
 			PC <= PC_idu_out;
 		end
 		
-		//shift IRs
-		if(halt == 0) begin
-			IR_WB <= IR_EXEC;
-			IR_RF <= IR_DECODE;
-			IR_EXEC <= IR_DECODE;
+		if(RESET || ram_addr != PC) begin
+			IR_RF <= 0;
+		end else if(halt == 0) begin
+			IR_RF <= ir_rf;
+		end else begin
+			IR_RF <= IR_RF;
 		end
 		
-		//FETCH + DECODE
-		if(halt) begin 
-		end //do nothing
-		else if(PC_set_dis) begin //skip this instruction
+		if(RESET || PC < 2) begin
 			IC <= C_NOP;
 		end else begin
-		case(x)
-			0: begin
-				case(z)
-					0: begin
-							case(y)
-								0: IC <= C_NOP;
-								1: IC <= C_EX;
-								2: IC <= C_DJNZ;
-								3: IC <= C_JR;
-								4: IC <= C_JR2;
-								5: IC <= C_JR2;
-								6: IC <= C_JR2;
-								7: IC <= C_JR2;
-							endcase
-						end
-					1: begin
-							case(q)
-								0: IC <= C_16BIT_LDIMM;
-								1: IC <= C_16BIT_ADDHL;
-							endcase
-						end
-					2: begin 
-							case(q)
-								0: begin 
-										case(p)
-											0: IC <= C_WRITE_INDIRECT;
-											1: IC <= C_WRITE_INDIRECT;
-											2: IC <= C_WRITE_INDIRECT_IMM;
-											3: IC <= C_WRITE_INDIRECT_IMM;
-										endcase
-									end
-								1: begin 
-										case(p)
-											0: IC <= C_LOAD_INDIRECT;
-											1: IC <= C_LOAD_INDIRECT;
-											2: IC <= C_LOAD_INDIRECT_IMM;
-											3: IC <= C_LOAD_INDIRECT_IMM;
-										endcase
-									end
-							endcase
-						end
-					3: IC <= C_16BIT_INCDEC;
-					4: IC <= C_INC;
-					5: IC <= C_DEC;
-					6: IC <= C_LOAD_IMM;
-					7: IC <= C_ACC;
-				endcase
-			end
-			
-			1: begin
-				if(z == 6 && y == 6) begin
-					IC <= C_HALT;
-				end else begin
-					IC <= C_LOAD;
-				end
-			end
-			
-			2: IC <= C_ALU;
-			
-			3: begin
-				// TODO
-			end
-		endcase
+			case(IC)
+				C_16BIT_LDIMM: IC <= C_16BIT_LDIMM_EXEC_LO;
+				C_16BIT_LDIMM_EXEC_LO: IC <= C_16BIT_LDIMM_EXEC_HI;
+				C_LOAD_IMM: IC <= C_LOAD_IMM_EXEC;
+				C_LOAD: IC <= C_LOAD_EXEC;
+				C_JUMP_IMM: IC <= C_JUMP_IMM_EXEC_LO;
+				C_JUMP_IMM_EXEC_LO: IC <= C_JUMP_IMM_EXEC_HI;
+				default: IC <= ram_IC;
+			endcase
 		end
 		
-		//EXEC
-		case(IC)
-			C_NOP: begin
-			 end
-			C_EX: begin
-			 end
-			C_DJNZ: begin
-			 end
-			C_JR: begin
-				PC_set_dis <= 1;
-			 end
-			C_JR2: begin
-			 end
-			C_16BIT_LDIMM: begin
-				IC <= C_16BIT_LDIMM_EXEC_HI;
-			 end
-			C_16BIT_LDIMM_EXEC_HI: begin
-				IC <= C_NOP;
-			 end
-			C_16BIT_ADDHL: begin
-			 end
-			C_LOAD_INDIRECT: begin
-			 end
-			C_WRITE_INDIRECT: begin
-			 end
-			C_LOAD_INDIRECT_IMM: begin
-			 end
-			C_WRITE_INDIRECT_IMM: begin
-			 end
-			C_16BIT_INCDEC: begin
-			 end
-			C_INC: begin
-			 end
-			C_DEC: begin
-			 end
-			C_LOAD_IMM: begin
-				IC <= C_LOAD_IMM_EXEC;
-			 end
-			C_ACC: begin
-			 end
-			C_LOAD: begin
-			 end
-			C_HALT: begin
-			 end
-			C_ALU: begin
-			 end
-			C_CON_RET: begin
-			 end
-			C_POP: begin
-			 end
-			C_RET: begin
-			 end
-			C_EXX: begin
-			 end
-			C_JUMP_HL: begin
-			 end
-			C_LD_SP_HL: begin
-			 end
-			C_CON_JUMP: begin
-			 end
-			C_JUMP_IMM: begin
-				PC_set_low <= 1;
-				IC <= C_JUMP_IMM_EXEC_HI;
-			 end
-			C_JUMP_IMM_EXEC_HI: begin
-				PC_set_high <= 1;
-				IC <= C_NOP;
-			 end
-			C_PREFIX_CB: begin
-			 end
-			C_OUT: begin
-			 end
-			C_IN: begin
-			 end
-			C_EX_SP_HL: begin
-			 end
-			C_EX_DE_HL: begin
-			 end
-			C_DI: begin
-			 end
-			C_EI: begin
-			 end
-			C_CON_CALL: begin
-			 end
-			C_PUSH: begin
-			 end
-			C_CALL: begin
-			 end
-			C_PREFIX_DD: begin
-			 end
-			C_PREFIX_ED: begin
-			 end
-			C_PREFIX_FD: begin
-			 end
-			C_ALU_IMM: begin
-			 end
-			C_RESTART: begin
-			 end
-		endcase
-		//RF + WRITEBACK (WB results in reg A)
-		if(IR_WB != 255) begin
-
-		end
-		//rf_load <= 0;
-		//load_imm <= 0;
-		//rf_set_ir <= 0;
-		//rf
-		//PC_idu_op <= 0;
-
-		//read from memory
+		
 	end
 	
 
+endmodule
+
+module decoder(code, ir_rf, ic, halt, on_pc);
+	input wire halt, on_pc;
+	input wire [7:0] code;
+	output wire [7:0] ir_rf;
+	output opcode ic;
+	
+	wire [1:0] x = code[7:6];
+	wire [2:0] y = code[5:3];
+	wire [2:0] z = code[2:0];
+	wire q = code[3];
+	wire [1:0] p = code[5:4];
+	
+	wire ram_load_8 = (
+		ic == C_JR
+	|| ic == C_DJNZ
+	|| ic == C_WRITE_INDIRECT_A_IMM 
+	|| ic == C_LOAD_INDIRECT_A_IMM 
+	|| ic == C_LOAD_IMM
+	|| ic == C_ALU_IMM
+	|| ic == C_HALT
+	);
+	
+	always @(*) begin
+		if(on_pc) begin
+			ir_rf <= code;
+			case(x)
+				0: begin
+					case(z)
+						0: begin
+								case(y)
+									0: ic <= C_NOP;
+									1: ic <= C_EX;
+									2: ic <= C_DJNZ;
+									3: ic <= C_JR;
+									4: ic <= C_JR2;
+									5: ic <= C_JR2;
+									6: ic <= C_JR2;
+									7: ic <= C_JR2;
+								endcase
+							end
+						1: begin
+								case(q)
+									0: ic <= C_16BIT_LDIMM;
+									1: ic <= C_16BIT_ADDHL;
+								endcase
+							end
+						2: begin 
+								case(q)
+									0: begin 
+											case(p)
+												0: ic <= C_WRITE_INDIRECT;
+												1: ic <= C_WRITE_INDIRECT;
+												2: ic <= C_WRITE_INDIRECT_HL_IMM;
+												3: ic <= C_WRITE_INDIRECT_A_IMM;
+											endcase
+										end
+									1: begin 
+											case(p)
+												0: ic <= C_LOAD_INDIRECT;
+												1: ic <= C_LOAD_INDIRECT;
+												2: ic <= C_LOAD_INDIRECT_HL_IMM;
+												3: ic <= C_LOAD_INDIRECT_A_IMM;
+											endcase
+										end
+								endcase
+							end
+						3: ic <= C_16BIT_INCDEC;
+						4: ic <= C_INC;
+						5: ic <= C_DEC;
+						6: ic <= C_LOAD_IMM;
+						7: ic <= C_ACC;
+					endcase
+				end
+				
+				1: begin
+					if(z == 6 && y == 6) begin
+						ic <= C_HALT;
+					end else begin
+						ic <= C_LOAD;
+					end
+				end
+				
+				2: ic <= C_ALU;
+				
+				3: begin
+					ic <= ic;
+					// TODO
+				end
+				
+				default: ic <= ic;
+			endcase
+		end else begin
+			ir_rf <= ir_rf;
+			ic <= ic;
+		end
+		
+	
+		
+	
+	end
 endmodule

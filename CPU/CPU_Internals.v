@@ -31,7 +31,7 @@ endmodule
 	
 	
 	
-module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read, ram_read_addr, addr_sel, pc_w, acc_w, flag_w, load_imm, hold_imm, set_ab, load, rf_ir, displacement);
+module RF(CLK, rp_addr, rp_read, rp_wren, data_read, ram_write, ram_read, ram_read_addr, addr_sel, pc_w, acc_w, flag_w, load_imm, hold_imm, set_ab, load, rf_ir, displacement);
 	parameter data_size = 16;
 	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
@@ -48,7 +48,7 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 	input wire [ram_addr_size-1:0] pc_w;
 	input wire [data_size-1:0] acc_w, flag_w, ram_read, rf_ir;
 	
-	output wire wr_en;
+
 	output wire [2:0] addr_sel;
 	output wire [data_size-1:0] data_read, ram_write;
 	output wire [ram_addr_size-1:0] ram_read_addr;
@@ -64,7 +64,7 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 	//registers
 	reg [ram_addr_size-1:0] SP, ram_write_data; //special resigsters
 	reg [data_size-1:0] reg_arr [(1<<addr_size)-1:0]; //generic registers
-	reg wr;
+	reg reset_data_buffer = 0;
 	
 	//data wires
 	wire [2:0] [ram_addr_size-1:0] ram_read_bus;
@@ -72,17 +72,13 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 	assign ram_read_bus[BUS_HL] = {reg_arr[H], reg_arr[L]};
 	
 	assign ram_write_addr = {reg_arr[H], reg_arr[L]};
-	assign wr_en = wr; assign ram_write = ram_write_data;
+	assign ram_write = ram_write_data;
 	
-	wire use_bus_hl = addr_B == HL && ~load_imm && ~hold_imm;
+	wire use_bus_hl = load_imm;
 	assign addr_sel = (BUS_PC&{3{~use_bus_hl}}) | (BUS_HL&{3{(use_bus_hl)}});
 	
 	register_mux #(.reg_size(ram_addr_size), .sel_size(2)) addr_mux(ram_read_bus, ram_read_addr, addr_sel);
 	
-	
-	wire load_hl = (load_imm | (addr_B == HL)) && ~hold_imm;
-	
-	assign reg_arr[3'b110] = (ram_read&{8{load_hl}}) | (reg_arr[3'b110]&{8{~load_hl}});
 	wire [data_size-1:0] imm = reg_arr[3'b110];
 	assign displacement = imm;
 	
@@ -91,19 +87,19 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 	|| {reg_arr[2],reg_arr[3]}&{(data_size*2){rp_addr == 1}}
 	|| {reg_arr[4],reg_arr[5]}&{(data_size*2){rp_addr == 2}}
 	|| SP&{(data_size*2){rp_addr == 3}};
+	
 
-	always @(posedge CLK) begin
-		
-		//if(load_imm) begin
-		//	reg_arr[3'b110] <= ram_read;
-		//end
-		
+
+	always @(*) begin
 		reg_arr[A] <= acc_w;
 		
-		wr <= (addr_A == 3'b110);
+		if(load_imm) begin
+			reg_arr[HL] <= ram_read;
+		end else begin
+			reg_arr[HL] <= reg_arr[HL];
+		end
 		
-		
-		if(load) begin
+		if(load) begin //ld
 			case(addr_A)
 				3'b000: reg_arr[3'b000] <=  reg_arr[addr_B];
 				3'b001: reg_arr[3'b001] <=  reg_arr[addr_B];
@@ -114,22 +110,39 @@ module RF(CLK, rp_addr, rp_read, rp_wren, data_read, wr_en, ram_write, ram_read,
 				3'b110: ram_write_data <=  reg_arr[addr_B];
 				3'b111: reg_arr[3'b111] <=  reg_arr[addr_B];
 			endcase
-		end
-		
-		if(rp_wren == 1) begin //write low
+			SP <= SP;
+		end else if(rp_wren == 1) begin //rp low
 			case(rp_addr)
 				0: reg_arr[1] <= ram_read;
 				1: reg_arr[3] <= ram_read;
 				2: reg_arr[5] <= ram_read;
 				3: SP[7:0] <= ram_read;
 			endcase
-		end else if(rp_wren == 2) begin //write high
+			reg_arr[0] <= reg_arr[0];
+			reg_arr[2] <= reg_arr[2];
+			reg_arr[4] <= reg_arr[4];
+			SP[15:8] <= SP[15:8];
+		end else if(rp_wren == 2) begin //rp high
 			case(rp_addr)
 				0: reg_arr[0] <= ram_read;
 				1: reg_arr[2] <= ram_read;
 				2: reg_arr[4] <= ram_read;
 				3: SP[15:8] <= ram_read;
 			endcase
+			SP[7:0] <= SP[7:0];
+			reg_arr[1] <= reg_arr[1];
+			reg_arr[3] <= reg_arr[3];
+			reg_arr[5] <= reg_arr[5];
+		end else begin //avoid latch inference errors
+				reg_arr[3'b000] <=  reg_arr[3'b000];
+				reg_arr[3'b001] <=  reg_arr[3'b001];
+				reg_arr[3'b010] <=  reg_arr[3'b010];
+				reg_arr[3'b011] <=  reg_arr[3'b011];
+				reg_arr[3'b100] <=  reg_arr[3'b100];
+				reg_arr[3'b101] <=  reg_arr[3'b101];
+				ram_write_data <=  ram_write_data;
+				reg_arr[3'b111] <=  reg_arr[3'b111];
+				SP <= SP;
 		end
 	end
 	

@@ -22,15 +22,17 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	wire REQ, ACK;
 	
 	//boot logic
-	wire boot_active;
-	assign core_to_ram_wren[0] = boot_active;
+	wire boot_active, boot_wren;
+	assign core_to_ram_wren[0] = boot_wren;
 	prgm rom(rom_addr, mem_CLK, rom_data);
-	copy_rom #(.data_size(data_size), .addr_size(rom_addr_size), .rom_size(14)) boot_rom(FPGA_CLK1_50, 
-	rom_data, 
+	prgm rom_view(SW, FPGA_CLK1_50, LED);
+	copy_rom #(.data_size(data_size), .addr_size(rom_addr_size), .rom_size(256)) boot_rom(FPGA_CLK1_50, 
+	rom_data, ram_read_data,
+	core_to_ram_read_addr[0],
 	core_to_ram_write_data[0],
 	rom_addr, 
 	core_to_ram_write_addr[0],
-	boot_active);
+	boot_active, boot_wren);
 	
 	//ram+rom write signals
 	wire [data_size-1:0] rom_data;
@@ -63,17 +65,16 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 
 	
 	//wire [rom_addr_size-1:0] addr = {SW[3],SW[2],SW[1],SW[0]};
-	assign core_to_ram_read_addr[0] = SW;
 	
 	//cores
 	SM83 #(.N_data(data_size), .N_reg_addr(reg_addr_size), .N_ram_addr(ram_addr_size)) core(
 	core_CLK, REQ, ACK, 
 	core_to_ram_wren[1],
 	core_to_ram_read_addr[1], core_to_ram_write_addr[1], ram_read_data, core_to_ram_write_data[1],
-	reg_read, print
+	reg_read, print,
+	boot_active
 	);
 	
 	//display
 	wire [7:0] print;
-	assign LED = print;
 endmodule
