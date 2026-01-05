@@ -17,22 +17,9 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	//control signals
 	gb_clock #(.value(6), .half_value(3), .bits(3)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
-	wire core_CLK = ~KEY[0]&~boot_active;//core_vCLK&~boot_active;
-	wire mem_CLK = ~KEY[0]&(~boot_active) | FPGA_CLK1_50&boot_active;
+	wire core_CLK = ~KEY[0];
+	wire mem_CLK = ~KEY[0];
 	wire REQ, ACK;
-	
-	//boot logic
-	wire boot_active, boot_wren;
-	assign core_to_ram_wren[0] = boot_wren;
-	prgm rom(rom_addr, mem_CLK, rom_data);
-	prgm rom_view(SW, FPGA_CLK1_50, LED);
-	copy_rom #(.data_size(data_size), .addr_size(rom_addr_size), .rom_size(256)) boot_rom(FPGA_CLK1_50, 
-	rom_data, ram_read_data,
-	core_to_ram_read_addr[0],
-	core_to_ram_write_data[0],
-	rom_addr, 
-	core_to_ram_write_addr[0],
-	boot_active, boot_wren);
 	
 	//ram+rom write signals
 	wire [data_size-1:0] rom_data;
@@ -47,7 +34,7 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	
 	//data control
 	wire [core_addr_size-1:0] write_control = 8'd1;
-	wire [core_addr_size-1:0] boot_control = ((8'd0)&{8{boot_active}}) | (write_control&{8{~boot_active}});
+	wire [core_addr_size-1:0] boot_control = write_control;
 	wire ram_wren;
 	
 	
@@ -58,6 +45,14 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 	
 	ram dram(mem_CLK, ram_write_data, ram_read_addr, ram_write_addr, ram_wren, ram_read_data);
 	
+	reg [ram_addr_size-1:0] RAM_addr, Prev_RAM_addr;
+	
+	assign ACK = (RAM_addr == ram_read_addr);
+	
+	always @ (posedge mem_CLK) begin
+		Prev_RAM_addr <= ram_read_addr;
+		RAM_addr <= Prev_RAM_addr;
+	end
 	
 	
 
@@ -65,16 +60,19 @@ module Z80 (FPGA_CLK1_50, LED, SW, KEY);
 
 	
 	//wire [rom_addr_size-1:0] addr = {SW[3],SW[2],SW[1],SW[0]};
+	wire [ram_addr_size-1:0] cpu_addr;
+	wire [data_size-1:0] cpu_data;
+	
+	assign core_to_ram_read_addr[1] = cpu_addr;
+	assign core_to_ram_write_addr[1] = cpu_addr;
+	assign core_to_ram_write_data[1] = cpu_data;
 	
 	//cores
 	SM83 #(.N_data(data_size), .N_reg_addr(reg_addr_size), .N_ram_addr(ram_addr_size)) core(
 	core_CLK, REQ, ACK, 
 	core_to_ram_wren[1],
-	core_to_ram_read_addr[1], core_to_ram_write_addr[1], ram_read_data, core_to_ram_write_data[1],
-	reg_read, print,
-	boot_active
+	cpu_addr, ram_read_data,
+	1'd0
 	);
 	
-	//display
-	wire [7:0] print;
 endmodule

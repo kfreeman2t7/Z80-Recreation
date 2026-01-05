@@ -1,6 +1,7 @@
-ld A, 0
-ld D, 0
-ld C, B
+ld A, 5
+ld D, 3
+ld C, D
+ld B, C
 ld B, 0x12
 ld B, (HL)
 ld HL, 0x0F05
