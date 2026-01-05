@@ -31,7 +31,7 @@ endmodule
 	
 	
 	
-module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, displacement);
+module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement);
 	parameter data_size = 8;
 	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
@@ -42,7 +42,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	parameter HL = 3'b110;
 	
 	//i/o
-	input wire CLK, load, load_imm, rp_load;
+	input wire CLK, load, load_imm, rp_load, alu_op;
 	input clock_cycle T;
 	input wire [data_size-1:0] ram_read, IR_READ, IR_WRITE;
 	input wire [ram_addr_size-1:0] PC;
@@ -61,7 +61,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	wire [1:0] rp_addr = IR_WRITE[5:4];
 	
 	//registers
-	reg [data_size-1:0] ram_write_data;
+	reg [data_size-1:0] ram_write_data, alu_in;
 	reg [ram_addr_size-1:0] SP, ram_write_addr_reg; //special resigsters
 	reg [data_size-1:0] reg_arr [(1<<addr_size)-1:0]; //general purpose registers
 	
@@ -81,6 +81,11 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	wire [data_size-1:0] imm = reg_arr[3'b110];
 	assign displacement = imm;
 	
+	//ALU
+	reg [data_size-1:0] F;
+	wire [data_size-1:0] alu_buffer, flag_buffer;
+	ALU #(.bit_size(8)) (CLK,reg_arr[A],reg_arr[addr_B],F,alu_buffer,addr_A,flag_buffer);
+	
 
 
 	always @(posedge CLK) begin	
@@ -91,7 +96,11 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 			
 			end
 			T2: begin 
-				if(load) begin //ld
+			
+				if(alu_op) begin
+					F <= flag_buffer;
+					reg_arr[A] <= alu_buffer;
+				end else if(load) begin //ld
 					case(addr_A)
 						3'b000: reg_arr[3'b000] <=  reg_arr[addr_B];
 						3'b001: reg_arr[3'b001] <=  reg_arr[addr_B];
@@ -142,18 +151,67 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	
 endmodule
 
-module ALU(CLK,A,B,reg_out,mode,flags_w);
+module ALU(CLK,A,r,f,reg_out,mode,flags_w);
 	parameter bit_size = 16;
+	
+	localparam S = 7, Z = 6, x = 5, H = 4, y = 3, PV = 2, N = 1, C = 0;
 	
 	input wire CLK;
 	input wire [1:0] mode;
-	input wire [bit_size-1:0] A,B;
+	input wire [bit_size-1:0] A,r,f;
 	output wire [bit_size-1:0] reg_out, flags_w;
 	
 	wire [bit_size:0] wide_res;
-	wire [bit_size-1:0] res, flags;
+	reg [bit_size-1:0] res, res_out, F;
 	
-	assign wide_res = A + B;
+	assign F[N] = f[N];
+	assign F[Z] = (res == 0);
+	assign F[S] = ~res[7];
+	assign F[H] = (A[3] == 1) & (A[4] == 1);
+	
+	assign F[PV] = ( 
+	(mode == 0) & (A[7] == r[7]) & (res[7] != A[7]) |
+	(mode == 1 | mode == 7) & (A[7] == adc[7]) & (res[7] != A[7]) |
+	(mode == 2) & (A[7] != r[7]) & (res[7] != A[7]) |
+	(mode == 3) & (A[7] != adc[7]) & (res[7] != A[7])
+	);
+	
+	wire [bit_size:0] adc = r + f[0];
+	
+	always @(*) begin
+		case(mode)
+			0: begin
+				{F[C], res} <= A + r;
+			end
+			1: begin
+				{F[C], res} <= A + adc;
+			end
+			2: begin
+				{F[C], res} <= A - r;
+			end
+			3: begin
+				{F[C], res} <= A - adc;
+			end
+			4: begin
+				F[C] <= 0;
+				res <= A & r;
+			end
+			5: begin
+				F[C] <= 0;
+				res <= A ^ r;
+			end
+			6: begin
+				F[C] <= 0;
+				res <= A | r;
+			end
+			7: begin
+				F[C] <= 0;
+				res <= A - r;
+			end
+			
+			default: res <= 0;
+		endcase
+	end
 	
 	assign reg_out = res;
 endmodule

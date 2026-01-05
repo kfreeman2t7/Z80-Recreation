@@ -1,9 +1,3 @@
-ld A, 5
-ld D, 3
-ld C, D
-ld B, C
-ld B, 0x12
-ld B, (HL)
-ld HL, 0x0F05
-ld (HL), 0x72
-ld B, (HL)
+ld A, 0x5
+ld B, 0x14
+ADD A,B

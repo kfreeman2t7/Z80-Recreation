@@ -6,12 +6,12 @@ def proper_hex(x):
 retro_assembler_dir = "C:\\Users\\Kenneth\\Documents\\retroassembler\\retroassembler.exe" #download at https://enginedesigns.net/retroassembler/
 subprocess.run(retro_assembler_dir+" program.z80.asm")
 
-data = open("program.bin")
-chars = data.read()
+data = open("program.bin",'rb')
+bytes = data.read()
 data.close()
 opcodes = [0]
-for char in chars:
-    opcodes.append(proper_hex(ord(char)))
+for byte in bytes:
+    opcodes.append(proper_hex(byte))
 
 while len(opcodes) < 2**16-1:
     opcodes.append(0)
@@ -38,7 +38,6 @@ for op in opcodes:
 
 mif += "\n"+footer
 
-print(mif)
 
 bytecode = open("program.mif",'w')
 bytecode.write(mif)

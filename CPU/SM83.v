@@ -100,13 +100,14 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET);
 	decoder(data_bus, OP_TEMP);
 	
 	//RF
-	RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, displacement);
+	RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement);
 	
 	//write control signals
 	wire load = (OP_WRITE == C_LOAD || OP_WRITE == C_LOAD_IMM);
+	wire alu_op = (OP_WRITE == C_ALU || OP_WRITE == C_ALU_IMM);
 	wire rp_load = (OP_WRITE == C_16BIT_LDIMM);
 	//read control signals
-	wire load_imm = (OP_READ == C_LOAD_IMM || OP_READ == C_16BIT_LDIMM);
+	wire load_imm = (OP_READ == C_LOAD_IMM || OP_READ == C_16BIT_LDIMM || OP_READ == C_ALU_IMM);
 	
 	wire [7:0] displacement;
 
@@ -219,6 +220,9 @@ module decoder(code, ic);
 			3: begin
 				ic <= ic;
 				// TODO
+				case(z)
+					6: ic <= C_ALU_IMM;
+				endcase
 			end
 			
 			default: ic <= ic;
