@@ -1,3 +1,5 @@
 ld A, 0x5
-ld B, 0x14
-ADD A,B
+ADD A, A
+END:
+    ADD A, 1
+    JR END

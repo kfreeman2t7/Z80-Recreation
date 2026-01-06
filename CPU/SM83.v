@@ -79,7 +79,9 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET);
 	assign addr_bus = ram_addr;
 	
 	wire [15:0] ram_addr;
-	wire fetch_enable = (ram_addr == PC) && ~RESET;
+	wire data_is_imm = load_imm || rp_load;
+	
+	wire fetch_enable = (ram_addr == PC) && ~RESET && ~data_is_imm;
 	
 	
 	
@@ -107,7 +109,14 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET);
 	wire alu_op = (OP_WRITE == C_ALU || OP_WRITE == C_ALU_IMM);
 	wire rp_load = (OP_WRITE == C_16BIT_LDIMM);
 	//read control signals
-	wire load_imm = (OP_READ == C_LOAD_IMM || OP_READ == C_16BIT_LDIMM || OP_READ == C_ALU_IMM);
+	wire load_imm = (
+	OP_READ == C_LOAD_IMM 
+	|| OP_READ == C_16BIT_LDIMM 
+	|| OP_READ == C_ALU_IMM
+	|| OP_READ == C_JR
+	);
+	
+	wire load_pc = (OP_WRITE == C_JR);
 	
 	wire [7:0] displacement;
 
@@ -128,9 +137,13 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET);
 			if(fetch_enable) begin
 				OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
 			end else begin
-				OP_FETCH <= C_NOP;
+				OP_FETCH <= C_NOP; IR_FETCH <= 0;
 			end
 		end else if(T == T2) begin 						//T3 cycle
+			if(load_pc) begin
+				PC <= PC + {{8{displacement[7]}},displacement};
+				OP_FETCH <= C_NOP; IR_FETCH <= 0;
+			end
 		end else	if(T == T3) begin 						//T1 cycle
 			OP_WRITE <= OP_READ; IR_WRITE <= IR_READ;
 			OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
