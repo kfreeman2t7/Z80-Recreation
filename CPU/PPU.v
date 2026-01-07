@@ -69,14 +69,69 @@ module PPU(input CLK, input [7:0] reg_data, input [2:0] reg_addr, input [10:0] h
 
 	always @ (*) begin
 			case(pos)
-				{8'd20,8'd0}:  char <= char_R;
-				{8'd21,8'd0}:  char <= char_E;
-				{8'd22,8'd0}:  char <= char_G;
-				{8'd23,8'd0}:  char <= 0;
-				{8'd24,8'd0}:  char <= char_B;
-				{8'd25,8'd0}:  char <= char_colon;
-				{8'd26,8'd0}:  char <= half_byte_to_char[registers[0][7:4]];
-				{8'd27,8'd0}:  char <= half_byte_to_char[registers[0][3:0]];
+				//B
+				{8'd1,8'd0}:  char <= char_R;
+				{8'd2,8'd0}:  char <= char_E;
+				{8'd3,8'd0}:  char <= char_G;
+				{8'd5,8'd0}:  char <= char_B;
+				{8'd6,8'd0}:  char <= char_colon;
+				{8'd7,8'd0}:  char <= half_byte_to_char[registers[0][7:4]];
+				{8'd8,8'd0}:  char <= half_byte_to_char[registers[0][3:0]];
+				//C
+				{8'd1,8'd1}:  char <= char_R;
+				{8'd2,8'd1}:  char <= char_E;
+				{8'd3,8'd1}:  char <= char_G;
+				{8'd5,8'd1}:  char <= char_C;
+				{8'd6,8'd1}:  char <= char_colon;
+				{8'd7,8'd1}:  char <= half_byte_to_char[registers[1][7:4]];
+				{8'd8,8'd1}:  char <= half_byte_to_char[registers[1][3:0]];
+				//D
+				{8'd1,8'd2}:  char <= char_R;
+				{8'd2,8'd2}:  char <= char_E;
+				{8'd3,8'd2}:  char <= char_G;
+				{8'd5,8'd2}:  char <= char_D;
+				{8'd6,8'd2}:  char <= char_colon;
+				{8'd7,8'd2}:  char <= half_byte_to_char[registers[2][7:4]];
+				{8'd8,8'd2}:  char <= half_byte_to_char[registers[2][3:0]];
+				//E
+				{8'd1,8'd3}:  char <= char_R;
+				{8'd2,8'd3}:  char <= char_E;
+				{8'd3,8'd3}:  char <= char_G;
+				{8'd5,8'd3}:  char <= char_E;
+				{8'd6,8'd3}:  char <= char_colon;
+				{8'd7,8'd3}:  char <= half_byte_to_char[registers[3][7:4]];
+				{8'd8,8'd3}:  char <= half_byte_to_char[registers[3][3:0]];
+				//H
+				{8'd1,8'd4}:  char <= char_R;
+				{8'd2,8'd4}:  char <= char_E;
+				{8'd3,8'd4}:  char <= char_G;
+				{8'd5,8'd4}:  char <= char_H;
+				{8'd6,8'd4}:  char <= char_colon;
+				{8'd7,8'd4}:  char <= half_byte_to_char[registers[4][7:4]];
+				{8'd8,8'd4}:  char <= half_byte_to_char[registers[4][3:0]];
+				//L
+				{8'd1,8'd5}:  char <= char_R;
+				{8'd2,8'd5}:  char <= char_E;
+				{8'd3,8'd5}:  char <= char_G;
+				{8'd5,8'd5}:  char <= char_L;
+				{8'd6,8'd5}:  char <= char_colon;
+				{8'd7,8'd5}:  char <= half_byte_to_char[registers[5][7:4]];
+				{8'd8,8'd5}:  char <= half_byte_to_char[registers[5][3:0]];
+				//HL
+				{8'd1,8'd7}:  char <= char_I;
+				{8'd2,8'd7}:  char <= char_M;
+				{8'd3,8'd7}:  char <= char_M;
+				{8'd4,8'd7}:  char <= char_colon;
+				{8'd6,8'd7}:  char <= half_byte_to_char[registers[6][7:4]];
+				{8'd7,8'd7}:  char <= half_byte_to_char[registers[6][3:0]];
+				//A
+				{8'd1,8'd6}:  char <= char_R;
+				{8'd2,8'd6}:  char <= char_E;
+				{8'd3,8'd6}:  char <= char_G;
+				{8'd5,8'd6}:  char <= char_A;
+				{8'd6,8'd6}:  char <= char_colon;
+				{8'd7,8'd6}:  char <= half_byte_to_char[registers[7][7:4]];
+				{8'd8,8'd6}:  char <= half_byte_to_char[registers[7][3:0]];
 				default: char <= 0;
 			endcase
 	end

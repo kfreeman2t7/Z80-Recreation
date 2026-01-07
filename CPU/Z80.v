@@ -104,10 +104,10 @@ module Z80 (
 	parameter ram_addr_size = 16;
 	
 	//control signals
-	gb_clock #(.value(6), .half_value(3), .bits(3)) vclock(FPGA_CLK1_50, core_vCLK);
+	gb_clock #(.value(5000000), .half_value(2500000), .bits(23)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
-	wire core_CLK = ~KEY[0];
-	wire mem_CLK = ~KEY[0];
+	wire core_CLK = core_vCLK;
+	wire mem_CLK = core_vCLK;
 	wire REQ, ACK;
 	
 	//ram+rom write signals

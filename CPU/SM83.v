@@ -81,7 +81,8 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 	wire [15:0] ram_addr;
 	wire data_is_imm = load_imm || rp_load;
 	
-	wire fetch_enable = (ram_addr == PC) && ~RESET && ~data_is_imm;
+	wire fetch_enable = (ram_addr == PC) && ~RESET;
+	wire valid_data = ~data_is_imm;
 	
 	
 	
@@ -134,7 +135,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 		
 		if(ACK == 0) begin
 		end else if(T == T1) begin 						//T2 cycle
-			if(fetch_enable) begin
+			if(fetch_enable && valid_data) begin
 				OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
 			end else begin
 				OP_FETCH <= C_NOP; IR_FETCH <= 0;
@@ -148,7 +149,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 			OP_WRITE <= OP_READ; IR_WRITE <= IR_READ;
 			OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
 			//set fetch IR
-			if(fetch_enable) begin
+			if(fetch_enable && ~load_pc) begin
 				PC <= PC + 1; //increment PC
 			end
 		end
