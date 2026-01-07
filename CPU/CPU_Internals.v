@@ -31,7 +31,7 @@ endmodule
 	
 	
 	
-module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement);
+module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
 	parameter data_size = 8;
 	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
@@ -52,6 +52,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	output wire [data_size-1:0] ram_write;
 	output wire [ram_addr_size-1:0] ram_read_addr;
 	output wire [data_size-1:0] displacement;
+	output wire [data_size-1:0] registers [(1<<addr_size)-1:0] = reg_arr;
 
 	
 	

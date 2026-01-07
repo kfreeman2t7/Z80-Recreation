@@ -63,13 +63,13 @@ parameter BUS_HL = 1;
 
 
 
-module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET);
+module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 	parameter N_data = 8;
 	parameter N_ram_addr = 16;
 	parameter N_reg_addr = 3;
 	
 	
-	
+	output wire [7:0] registers [7:0];
 	
 	
 	input wire CLK, RESET;
@@ -102,7 +102,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET);
 	decoder(data_bus, OP_TEMP);
 	
 	//RF
-	RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement);
+	RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
 	
 	//write control signals
 	wire load = (OP_WRITE == C_LOAD || OP_WRITE == C_LOAD_IMM);
