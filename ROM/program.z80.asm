@@ -2,7 +2,6 @@ nop
 ld A, 0
 ld B, 1
 END:
-    ADD A, B
     ADD A, 1
-    ld B, A
+    AND A, 0b00001111
     JR END

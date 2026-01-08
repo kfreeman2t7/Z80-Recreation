@@ -158,12 +158,11 @@ module ALU(CLK,A,r,f,reg_out,mode,flags_w);
 	localparam S = 7, Z = 6, x = 5, H = 4, y = 3, PV = 2, N = 1, C = 0;
 	
 	input wire CLK;
-	input wire [1:0] mode;
+	input wire [2:0] mode;
 	input wire [bit_size-1:0] A,r,f;
 	output wire [bit_size-1:0] reg_out, flags_w;
-	
-	wire [bit_size:0] wide_res;
-	reg [bit_size-1:0] res, res_out, F;
+
+	reg [bit_size-1:0] res, F;
 	
 	assign F[N] = f[N];
 	assign F[Z] = (res == 0);

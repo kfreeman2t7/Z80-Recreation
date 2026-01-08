@@ -104,7 +104,7 @@ module Z80 (
 	parameter ram_addr_size = 16;
 	
 	//control signals
-	gb_clock #(.value(5000000), .half_value(2500000), .bits(23)) vclock(FPGA_CLK1_50, core_vCLK);
+	gb_clock #(.value(500000), .half_value((500000/2)), .bits(32)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
 	wire core_CLK = core_vCLK;
 	wire mem_CLK = core_vCLK;
@@ -135,6 +135,7 @@ module Z80 (
 	z80_ram dram(mem_CLK, ram_write_data, ram_read_addr, ram_write_addr, ram_wren, ram_read_data);
 	
 	reg [ram_addr_size-1:0] RAM_addr, Prev_RAM_addr;
+	reg RESET = 1;
 	
 	assign ACK = (RAM_addr == ram_read_addr);
 	
@@ -142,8 +143,6 @@ module Z80 (
 		Prev_RAM_addr <= ram_read_addr;
 		RAM_addr <= Prev_RAM_addr;
 	end
-	
-	
 
 	
 
@@ -163,7 +162,7 @@ module Z80 (
 	core_CLK, REQ, ACK, 
 	core_to_ram_wren[1],
 	cpu_addr, ram_read_data,
-	1'd0,
+	~KEY[1],
 	registers
 	);
 	

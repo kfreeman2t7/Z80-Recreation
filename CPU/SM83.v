@@ -120,37 +120,47 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 	wire load_pc = (OP_WRITE == C_JR);
 	
 	wire [7:0] displacement;
+	wire pending_req = (ACK == 0) && (REQ == 1);
 
 	always @ (posedge CLK) begin
-		if(ACK == 1) begin
-			case(T)
-				T1: T <= T2;
-				T2: T <= T3;
-				T3: T <= T1;
-				default: T <= T1;
-			endcase
+		if(RESET) begin
+			T <= T1;
+			PC <= 0;
+			REQ <= 0;
 		end else begin
-			T <= T;
-		end
-		
-		if(ACK == 0) begin
-		end else if(T == T1) begin 						//T2 cycle
-			if(fetch_enable && valid_data) begin
-				OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
+			if(~pending_req) begin
+				REQ <= 0;
+				case(T)
+					T1: T <= T2;
+					T2: T <= T3;
+					T3: T <= T1;
+					default: T <= T1;
+				endcase
 			end else begin
-				OP_FETCH <= C_NOP; IR_FETCH <= 0;
+				T <= T;
 			end
-		end else if(T == T2) begin 						//T3 cycle
-			if(load_pc) begin
-				PC <= PC + {{8{displacement[7]}},displacement};
-				OP_FETCH <= C_NOP; IR_FETCH <= 0;
-			end
-		end else	if(T == T3) begin 						//T1 cycle
-			OP_WRITE <= OP_READ; IR_WRITE <= IR_READ;
-			OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
-			//set fetch IR
-			if(fetch_enable && ~load_pc) begin
-				PC <= PC + 1; //increment PC
+			
+			if(pending_req) begin
+			end else if(T == T1) begin 						//T2 cycle
+				if(fetch_enable && valid_data) begin
+					OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
+				end else begin
+					OP_FETCH <= C_NOP; IR_FETCH <= 0;
+				end
+			end else if(T == T2) begin 						//T3 cycle
+				if(load_pc) begin
+					PC <= PC + {{8{displacement[7]}},displacement} - 1;
+					REQ <= 0;
+					OP_FETCH <= C_NOP; IR_FETCH <= 0;
+				end
+			end else	if(T == T3) begin 						//T1 cycle
+				OP_WRITE <= OP_READ; IR_WRITE <= IR_READ;
+				OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
+				//set fetch IR
+				if(fetch_enable && ~load_pc) begin
+					PC <= PC + 1; //increment PC
+					REQ <= 1;
+				end
 			end
 		end
 	end
@@ -185,12 +195,14 @@ module decoder(code, ic);
 								5: ic <= C_JR2;
 								6: ic <= C_JR2;
 								7: ic <= C_JR2;
+								default: ic <= C_NOP;
 							endcase
 						end
 					1: begin
 							case(q)
 								0: ic <= C_16BIT_LDIMM;
 								1: ic <= C_16BIT_ADDHL;
+								default: ic <= C_NOP;
 							endcase
 						end
 					2: begin 
@@ -201,6 +213,7 @@ module decoder(code, ic);
 											1: ic <= C_WRITE_INDIRECT;
 											2: ic <= C_WRITE_INDIRECT_HL_IMM;
 											3: ic <= C_WRITE_INDIRECT_A_IMM;
+											default: ic <= C_NOP;
 										endcase
 									end
 								1: begin 
@@ -209,6 +222,7 @@ module decoder(code, ic);
 											1: ic <= C_LOAD_INDIRECT;
 											2: ic <= C_LOAD_INDIRECT_HL_IMM;
 											3: ic <= C_LOAD_INDIRECT_A_IMM;
+											default: ic <= C_NOP;
 										endcase
 									end
 							endcase
@@ -218,6 +232,7 @@ module decoder(code, ic);
 					5: ic <= C_DEC;
 					6: ic <= C_LOAD_IMM;
 					7: ic <= C_ACC;
+					default: ic <= C_NOP;
 				endcase
 			end
 			
@@ -232,14 +247,14 @@ module decoder(code, ic);
 			2: ic <= C_ALU;
 			
 			3: begin
-				ic <= ic;
 				// TODO
 				case(z)
 					6: ic <= C_ALU_IMM;
+					default: ic <= C_NOP;
 				endcase
 			end
 			
-			default: ic <= ic;
+			default: ic <= C_NOP;
 		endcase	
 	end
 endmodule
