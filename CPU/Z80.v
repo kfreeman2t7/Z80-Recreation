@@ -104,11 +104,14 @@ module Z80 (
 	parameter ram_addr_size = 16;
 	
 	//control signals
-	gb_clock #(.value(500000), .half_value((500000/2)), .bits(32)) vclock(FPGA_CLK1_50, core_vCLK);
+	gb_clock #(.value(10000000), .half_value((10000000/2)), .bits(32)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
 	wire core_CLK = core_vCLK;
 	wire mem_CLK = core_vCLK;
 	wire REQ, ACK;
+	
+	reg FORCE_RESET = 1;
+	reg [8:0] FORCE_RESET_TIMER = 32;
 	
 	//ram+rom write signals
 	wire [data_size-1:0] rom_data;
@@ -135,7 +138,6 @@ module Z80 (
 	z80_ram dram(mem_CLK, ram_write_data, ram_read_addr, ram_write_addr, ram_wren, ram_read_data);
 	
 	reg [ram_addr_size-1:0] RAM_addr, Prev_RAM_addr;
-	reg RESET = 1;
 	
 	assign ACK = (RAM_addr == ram_read_addr);
 	
@@ -153,18 +155,25 @@ module Z80 (
 	
 	assign core_to_ram_read_addr[1] = cpu_addr;
 	assign core_to_ram_write_addr[1] = cpu_addr;
-	assign core_to_ram_write_data[1] = cpu_data;
 	
 	wire [7:0] registers [7:0];
 	
 	//cores
 	SM83 #(.N_data(data_size), .N_reg_addr(reg_addr_size), .N_ram_addr(ram_addr_size)) core(
 	core_CLK, REQ, ACK, 
-	core_to_ram_wren[1],
+	core_to_ram_wren[1], core_to_ram_write_data[1],
 	cpu_addr, ram_read_data,
-	~KEY[1],
+	~KEY[1]|FORCE_RESET,
 	registers
 	);
+	
+	always @ (posedge core_CLK) begin
+		if(FORCE_RESET_TIMER > 0) begin
+			FORCE_RESET_TIMER <= FORCE_RESET_TIMER - 1;
+		end else begin
+			FORCE_RESET <= 0;
+		end
+	end
 	
 	wire [10:0] HDMI_x, HDMI_y;
 	wire [23:0] HDMI_rgb;

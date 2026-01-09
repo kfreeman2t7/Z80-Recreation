@@ -63,7 +63,7 @@ parameter BUS_HL = 1;
 
 
 
-module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
+module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, registers);
 	parameter N_data = 8;
 	parameter N_ram_addr = 16;
 	parameter N_reg_addr = 3;
@@ -75,6 +75,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 	input wire CLK, RESET;
 	input wire [7:0] data_bus;
 	output wire [15:0] addr_bus;
+	output wire [7:0] write_data;
 	
 	assign addr_bus = ram_addr;
 	
@@ -96,19 +97,20 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 	clock_cycle T;
 	
 	reg [15:0] PC;
-	wire [7:0] ram_write;
 	
 	//decoder
 	opcode OP_TEMP;
 	decoder(data_bus, OP_TEMP);
 	
 	//RF
-	RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+	RF(CLK, T, PC, IR_READ, IR_WRITE, write_data, ram_wren, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
 	
 	//write control signals
 	wire load = (OP_WRITE == C_LOAD || OP_WRITE == C_LOAD_IMM);
 	wire alu_op = (OP_WRITE == C_ALU || OP_WRITE == C_ALU_IMM);
-	wire rp_load = (OP_WRITE == C_16BIT_LDIMM);
+	wire rp_load = (
+		OP_WRITE == C_16BIT_LDIMM
+	);
 	//read control signals
 	wire load_imm = (
 	OP_READ == C_LOAD_IMM 
@@ -159,6 +161,10 @@ module SM83(CLK, REQ_out, ACK, ram_wren, addr_bus, data_bus, RESET, registers);
 				//set fetch IR
 				if(fetch_enable && ~load_pc) begin
 					PC <= PC + 1; //increment PC
+					REQ <= 1;
+				end
+				
+				if(~fetch_enable && ~load_pc) begin
 					REQ <= 1;
 				end
 			end

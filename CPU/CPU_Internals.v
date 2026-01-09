@@ -31,7 +31,7 @@ endmodule
 	
 	
 	
-module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
 	parameter data_size = 8;
 	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
@@ -53,6 +53,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	output wire [ram_addr_size-1:0] ram_read_addr;
 	output wire [data_size-1:0] displacement;
 	output wire [data_size-1:0] registers [(1<<addr_size)-1:0] = reg_arr;
+	output wire ram_wren;
 
 	
 	
@@ -67,15 +68,24 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	reg [data_size-1:0] reg_arr [(1<<addr_size)-1:0]; //general purpose registers
 	
 	//data wires
+	reg [ram_addr_size-1:0] hl_bus;
 	wire [2:0] [ram_addr_size-1:0] ram_read_bus;
 	assign ram_read_bus[BUS_PC] = PC;
-	assign ram_read_bus[BUS_HL] = {reg_arr[H], reg_arr[L]};
+	assign ram_read_bus[BUS_HL] = hl_bus;
 	
 	wire [ram_addr_size-1:0] ram_write_addr = ram_write_addr_reg;
 	assign ram_write = ram_write_data;
 	
-	wire use_bus_hl = 1'b0;
-	assign addr_sel = (BUS_PC&{3{~use_bus_hl}}) | (BUS_HL&{3{(use_bus_hl)}});
+	wire use_bus_hl = (IR_READ[2:0] == HL && ~load_imm) || (IR_WRITE[5:3] == HL);
+	assign ram_wren = (IR_WRITE[5:3] == HL);
+	
+	always @(*) begin
+		if(use_bus_hl) begin
+			addr_sel <= BUS_HL;
+		end else begin
+			addr_sel <= BUS_PC;
+		end
+	end
 	
 	register_mux #(.reg_size(ram_addr_size), .sel_size(2)) addr_mux(ram_read_bus, ram_read_addr, addr_sel);
 	
@@ -92,6 +102,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 	always @(posedge CLK) begin	
 		case(T)
 			T1: begin 
+				hl_bus <= {reg_arr[H], reg_arr[L]}; //sync hl bus with clock
 				//load immediate
 				
 			
@@ -139,7 +150,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_read, ram_read_addr, add
 					reg_arr[5] <= reg_arr[5];
 				end 
 				
-				if(load_imm) begin
+				if(load_imm || use_bus_hl) begin
 					reg_arr[HL] <= ram_read;
 				end else begin
 					reg_arr[HL] <= reg_arr[HL];
@@ -178,7 +189,7 @@ module ALU(CLK,A,r,f,reg_out,mode,flags_w);
 	
 	wire [bit_size:0] adc = r + f[0];
 	
-	always @(*) begin
+	always @(posedge CLK) begin
 		case(mode)
 			0: begin
 				{F[C], res} <= A + r;
