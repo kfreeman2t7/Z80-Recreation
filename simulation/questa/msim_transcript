@@ -1,0 +1,170 @@
+# Reading pref.tcl
+# //  Questa Intel Starter FPGA Edition-64
+# //  Version 2021.2 win64 Apr 14 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do Z80_run_msim_rtl_systemverilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Questa Intel Starter FPGA Edition-64 vmap 2021.2 Lib Mapping Utility 2021.04 Apr 14 2021
+# vmap work rtl_work 
+# Copying D:/intelFPGA/21.1/questa_fse/win64/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:44 on Jan 11,2026
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v 
+# -- Compiling module z80_ram
+# 
+# Top level modules:
+# 	z80_ram
+# End time: 14:34:45 on Jan 11,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:46 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv 
+# -- Compiling module Z80
+# 
+# Top level modules:
+# 	Z80
+# End time: 14:34:46 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:46 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv 
+# -- Compiling module register_mux
+# 
+# Top level modules:
+# 	register_mux
+# End time: 14:34:46 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:46 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv 
+# -- Compiling module arbiter
+# 
+# Top level modules:
+# 	arbiter
+# End time: 14:34:46 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:46 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv 
+# -- Compiling package states
+# 
+# Top level modules:
+# 	--none--
+# End time: 14:34:46 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:46 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv 
+# -- Compiling package SM83_sv_unit
+# -- Importing package states
+# -- Compiling module decoder
+# -- Compiling module SM83
+# 
+# Top level modules:
+# 	SM83
+# End time: 14:34:46 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:46 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv 
+# -- Compiling package CPU_Internals_sv_unit
+# -- Importing package states
+# -- Compiling module onehot_decoder
+# -- Compiling module gb_clock
+# -- Compiling module RF
+# -- Compiling module ALU
+# -- Compiling module IDU
+# 
+# Top level modules:
+# 	onehot_decoder
+# 	gb_clock
+# 	RF
+# 	IDU
+# End time: 14:34:46 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 14:34:47 on Jan 11,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v 
+# -- Compiling module testbench
+# 
+# Top level modules:
+# 	testbench
+# End time: 14:34:47 on Jan 11,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  Z80
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" Z80 
+# Start time: 14:34:47 on Jan 11,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-143) Recognized 1 FSM in module "SM83(fast)".
+# Loading sv_std.std
+# Loading work.Z80(fast)
+# Loading work.states(fast)
+# Loading work.CPU_Internals_sv_unit(fast)
+# Loading work.gb_clock(fast)
+# Loading work.arbiter(fast)
+# Loading work.arbiter(fast__1)
+# Loading work.arbiter(fast__2)
+# Loading work.z80_ram(fast)
+# Loading altera_mf_ver.altsyncram(fast)
+# Loading altera_mf_ver.altsyncram_body(fast)
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES(fast)
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION(fast)
+# Loading work.SM83_sv_unit(fast)
+# Loading work.SM83(fast)
+# Loading work.decoder(fast)
+# Loading work.RF(fast)
+# Loading work.register_mux(fast)
+# Loading work.ALU(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (17) for port 'rom_addr'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv(1).
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/rr_arb File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv Line: 134
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (17) for port 'rom_addr'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv(1).
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/rw_arb File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv Line: 135
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (17) for port 'rdaddress'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/dram File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv Line: 139
+# ** Warning: (vsim-3015) [PCDPC] - Port size (16) does not match connection size (17) for port 'wraddress'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v(44).
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/dram File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv Line: 139
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (48) for port 'input_regs'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
+# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'sel'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ** Warning: (vsim-3534) [FOFIR] - Failed to open file "./ROM/program.mif" for reading.
+# No such file or directory. (errno = ENOENT)    : D:/intelFPGA/21.1/questa_fse/win64/../intel/verilog/src/altera_mf.v(264)
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/dram/altsyncram_component/m_default/altsyncram_inst
+# ERROR: cannot read ./ROM/program.mif.
+# ** Warning: (vsim-7) Failed to open readmem file "./ROM/program.ver" in read mode.
+# No such file or directory. (errno = ENOENT)    : D:/intelFPGA/21.1/questa_fse/win64/../intel/verilog/src/altera_mf.v(48963)
+#    Time: 0 ps  Iteration: 0  Instance: /Z80/dram/altsyncram_component/m_default/altsyncram_inst

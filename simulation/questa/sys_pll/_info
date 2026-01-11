@@ -1,0 +1,34 @@
+m255
+K4
+z2
+!s11f vlog 2021.2 2021.04, Apr 14 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/questa
+vsys_pll_0002
+!s110 1768107069
+!i10b 1
+!s100 eh9cMVZfH^lo`NGPHd6Pm1
+IM[AI4_[dYf7o7[jaU7<Jj2
+R0
+w1767664163
+8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll/sys_pll_0002.v
+FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll/sys_pll_0002.v
+!i122 2
+L0 2 88
+VDg1SIo80bB@j0V0VzS_@n1
+OL;L;2021.2;73
+r1
+!s85 0
+31
+!s108 1768107069.000000
+!s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll/sys_pll_0002.v|
+!s90 -reportprogress|300|-vlog01compat|-work|sys_pll|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll/sys_pll_0002.v|
+!i113 0
+o-vlog01compat -work sys_pll -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+!s92 -vlog01compat -work sys_pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+tCvgOpt 0

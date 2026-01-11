@@ -1,0 +1,31 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlib sys_pll
+vmap sys_pll sys_pll
+vlog -vlog01compat -work sys_pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll/sys_pll_0002.v}
+vlib pll_reconfig
+vmap pll_reconfig pll_reconfig
+vlog -vlog01compat -work pll_reconfig +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig/altera_std_synchronizer.v}
+vlib pll
+vmap pll pll
+vlog -vlog01compat -work pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll/pll_0002.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.v}
+
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L sys_pll -L pll_reconfig -L pll -voptargs="+acc"  Z80
+
+add wave *
+view structure
+view signals
+run -all

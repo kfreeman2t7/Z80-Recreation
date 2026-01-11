@@ -1,0 +1,726 @@
+Determining the location of the ModelSim executable...
+
+Using: D:/intelFPGA/21.1/questa_fse/win64
+
+To specify a ModelSim executable directory, select: Tools -> Options -> EDA Tool Options
+Note: if both Questa Intel FPGA Edition and ModelSim executables are available, Questa Intel FPGA Edition will be used.
+
+**** Generating the ModelSim Testbench ****
+
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Z80 -c Z80 --vector_source="D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/Waveform.vwf" --testbench_file="D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/Waveform.vwf.vt"
+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Copyright (C) 2024  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Sat Jan 10 23:15:38 2026
+Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off Z80 -c Z80 --vector_source=D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/Waveform.vwf --testbench_file=D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/Waveform.vwf.vt
+Warning (20013): Ignored 24 assignments for entity "DE10_NANO_SoC_GHRD" -- entity does not exist in design
+    Warning (20014): Assignment for entity set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_PRESERVE_HIGH_SPEED_TILES ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IGNORE_SOURCE_FILE_CHANGES OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ALWAYS_USE_QXP_NETLIST OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_COLOR 16764057 -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_ASSIGNMENTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_EXISTING_ASSIGNMENTS REPLACE_CONFLICTING -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS UPDATE_CONFLICTING -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_PIN_ASSIGNMENTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_PROMOTE_ASSIGNMENTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_TYPE STANDARD_PARTITION -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name ALLOW_MULTIPLE_PERSONAS OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ASD_REGION_ID 1 -entity DE10_NANO_SoC_GHRD -sect
+ion_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name CROSS_BOUNDARY_OPTIMIZATIONS OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PROPAGATE_CONSTANTS_ON_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PROPAGATE_INVERSIONS_ON_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name MERGE_EQUIVALENT_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name MERGE_EQUIVALENT_BIDIRS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_EXTRACT_HARD_BLOCK_NODES ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ENABLE_STRICT_PRESERVATION OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+Info (119006): Selected device 5CSEBA6U23I7 for design "Z80"
+Warning: RST port on the PLL is not properly connected on instance DE10_Nano_HDMI_TX:comb_183|sys_pll:u_sys_pll|sys_pll_0002:sys_pll_inst|altera_pll:altera_pll_i|general[0].gpll. The reset port on the PLL should be connected. If the PLL loses lock for any reason, you might need to manually reset the PLL in order to re-establish lock to the reference clock. File: d:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/altera_pll.v Line: 749
+    Info: Must be connected
+
+007): Can't find port "IR_READ[7]" in design
+
+2]" in design
+
+RF:comb_43|reg_arr[0]" in design
+Info (201000): Generated Verilog Test Bench File D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/Waveform.vwf.vt for simulation
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 204 warnings
+    Info: Peak virtual memory: 4769 megabytes
+    Info: Processing ended: Sat Jan 10 23:15:39 2026
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:01
+
+Completed successfully. 
+
+Completed successfully. 
+
+**** Generating the functional simulation netlist ****
+
+quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/" Z80 -c Z80
+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Copyright (C) 2024  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Sat Jan 10 23:15:40 2026
+Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/ Z80 -c Z80
+Warning (20013): Ignored 24 assignments for entity "DE10_NANO_SoC_GHRD" -- entity does not exist in design
+    Warning (20014): Assignment for entity set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_PRESERVE_HIGH_SPEED_TILES ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IGNORE_SOURCE_FILE_CHANGES OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ALWAYS_USE_QXP_NETLIST OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_COLOR 16764057 -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_ASSIGNMENTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_EXISTING_ASSIGNMENTS REPLACE_CONFLICTING -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS UPDATE_CONFLICTING -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_PIN_ASSIGNMENTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_PROMOTE_ASSIGNMENTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_TYPE STANDARD_PARTITION -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name ALLOW_MULTIPLE_PERSONAS OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ASD_REGION_ID 1 -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity s
+et_global_assignment -name CROSS_BOUNDARY_OPTIMIZATIONS OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PROPAGATE_CONSTANTS_ON_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PROPAGATE_INVERSIONS_ON_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name MERGE_EQUIVALENT_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name MERGE_EQUIVALENT_BIDIRS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_EXTRACT_HARD_BLOCK_NODES ON -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ENABLE_STRICT_PRESERVATION OFF -entity DE10_NANO_SoC_GHRD -section_id Top was ignored
+Info (119006): Selected device 5CSEBA6U23I7 for design "Z80"
+Warning: RST port on the PLL is not properly connected on instance DE10_Nano_HDMI_TX:comb_183|sys_pll:u_sys_pll|sys_pll_0002:sys_pll_inst|altera_pll:altera_pll_i|general[0].gpll. The reset port on the PLL should be connected. If the PLL loses lock for any reason, you might need to manually reset the PLL in order to re-establish lock to the reference clock. File: d:/intelfpga_lite/23.1std/quartus/libraries/megafunctions/altera_pll.v Line: 749
+    Info: Must be connected
+Info (204019): Generated file Z80.vo in folder "D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim//" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 26 warnings
+    Info: Peak virtual memory: 4896 megabytes
+    Info: Processing ended: Sat Jan 10 23:15:43 2026
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:03
+
+Completed successfully. 
+
+**** Generating the ModelSim .do script ****
+
+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/Z80.do generated.
+
+Completed successfully. 
+
+**** Running the ModelSim simulation ****
+
+D:/intelFPGA/21.1/questa_fse/win64/vsim -c -do Z80.do
+
+Reading pref.tcl
+
+
+# 2021.2
+
+
+# do Z80.do
+
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+
+# Start time: 23:15:44 on Jan 10,2026
+# vlog -work work Z80.vo 
+
+# -- Compiling module Z80
+
+# 
+
+# Top level modules:
+# 	Z80
+
+# End time: 23:15:45 on Jan 10,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+
+# Start time: 23:15:45 on Jan 10,2026
+# vlog -work work Waveform.vwf.vt 
+
+# -- Compiling module Z80_vlg_vec_tst
+
+# 
+
+# Top level modules:
+# 	Z80_vlg_vec_tst
+
+# End time: 23:15:45 on Jan 10,2026, Elapsed time: 0:00:00
+
+# Errors: 0, Warnings: 0
+
+# vsim -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.Z80_vlg_vec_tst 
+# Start time: 23:15:45 on Jan 10,2026
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: $MODEL_TECH/../intel/verilog/src/mentor/cyclonev_atoms_ncrypt.v(38): (vopt-2241) Connection width does not match width of port ''.
+# ** Warning: Waveform.vwf.vt(82): (vopt-2685) [TFMPC] - Too few port connections for 'i1'.  Expected 30, found 26.
+# ** Warning: Waveform.vwf.vt(82): (vopt-2718) [TFMPC] - Missing connection for port 'altera_reserved_tdo'.
+# ** Warning: Waveform.vwf.vt(82): (vopt-2718) [TFMPC] - Missing connection for port 'altera_reserved_tdi'.
+# ** Warning: Waveform.vwf.vt(82): (vopt-2718) [TFMPC] - Missing connection for port 'altera_reserved_tck'.
+# ** Warning: Waveform.vwf.vt(82): (vopt-2718) [TFMPC] - Missing connection for port 'altera_reserved_tms'.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=6.
+# //  Questa Intel Starter FPGA Edition-64
+# //  Version 2021.2 win64 Apr 14 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+
+# Loading work.Z80_vlg_vec_tst(fast)
+# Loading work.Z80(fast)
+# Loading sv_std.std
+# Loading altera_lnsim_ver.altera_generic_pll_functions(fast)
+# Loading altera_lnsim_ver.altera_lnsim_functions(fast)
+# Loading altera_lnsim_ver.generic_device_pll(fast)
+# Loading altera_lnsim_ver.generic_device_pll(fast__1)
+# Loading altera_lnsim_ver.generic_m10k(fast)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast)
+# Loading altera_lnsim_ver.common_28nm_ram_pulse_generator(fast)
+# Loading altera_lnsim_ver.generic_m10k(fast__1)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__1)
+# Loading altera_lnsim_ver.generic_m10k(fast__2)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__2)
+# Loading altera_lnsim_ver.generic_m10k(fast__3)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__3)
+# Loading altera_lnsim_ver.generic_m10k(fast__4)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__4)
+# Loading altera_lnsim_ver.generic_m10k(fast__5)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__5)
+# Loading altera_lnsim_ver.generic_m10k(fast__6)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__6)
+# Loading altera_lnsim_ver.generic_m10k(fast__7)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__7)
+# Loading altera_lnsim_ver.generic_m10k(fast__8)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__8)
+# Loading altera_lnsim_ver.generic_m10k(fast__9)
+# Loading altera_lnsim_ver.common_28nm_ram_block(fast__9)
+# Loading altera_lnsim_ver.altera_pll_reconfig_tasks(fast)
+
+# ** UI-Msg (suppressible): (vsim-3561) No objects found matching '*'.
+
+# after#28
+
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_0.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_0.no_need_to_gen
+# Info: reference_clock_frequency = 100.0 mhz
+# Info: output_clock_frequency = 482.352941 mhz
+# Info: phase_shift = 0 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 1036.585366
+# Info: output_clock_low_period = 1036.585366
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_1.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_1.no_need_to_gen
+# Info: reference_clock_frequency = 100.0 mhz
+# Info: output_clock_frequency = 482.352941 mhz
+# Info: phase_shift = 259 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 1036.585366
+# Info: output_clock_low_period = 1036.585366
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_2.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_2.no_need_to_gen
+# Info: reference_clock_frequency = 100.0 mhz
+# Info: output_clock_frequency = 482.352941 mhz
+# Info: phase_shift = 518 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 1036.585366
+# Info: output_clock_low_period = 1036.585366
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_3.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_3.no_need_to_gen
+# Info: reference_clock_frequency = 100.0 mhz
+# Info: output_clock_frequency = 482.352941 mhz
+# Info: phase_shift = 777 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 1036.585366
+# Info: output_clock_low_period = 1036.585366
+# 
+# Warning: por to CB BFM is not connected, internal por is used.
+# 
+# 
+# Warning: por to CB BFM is not connected, internal por is used.
+# 
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_0.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_0.no_need_to_gen
+# Info: reference_clock_frequency = 50.0 mhz
+# Info: output_clock_frequency = 810.0 mhz
+# Info: phase_shift = 0 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 617.283951
+# Info: output_clock_low_period = 617.283951
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_1.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_1.no_need_to_gen
+# Info: reference_clock_frequency = 50.0 mhz
+# Info: output_clock_frequency = 810.0 mhz
+# Info: phase_shift = 154 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 617.283951
+# Info: output_clock_low_period = 617.283951
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_2.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_2.no_need_to_gen
+# Info: reference_clock_frequency = 50.0 mhz
+# Info: output_clock_frequency = 810.0 mhz
+# Info: phase_shift = 308 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 617.283951
+# Info: output_clock_low_period = 617.283951
+# Info: =================================================
+# Info:           Generic PLL Summary
+# Info: =================================================
+# Time scale of (Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_3.no_need_to_gen) is  1ps /  1ps
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_vpg|u_pll|pll_inst|altera_pll_i|cyclonev_pll|fpll_0|fpll .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_3.no_need_to_gen
+# Info: reference_clock_frequency = 50.0 mhz
+# Info: output_clock_frequency = 810.0 mhz
+# Info: phase_shift = 462 ps
+# Info: duty_cycle = 50
+# Info: sim_additional_refclk_cycles_to_lock = 0
+# Info: output_clock_high_period = 617.283951
+# Info: output_clock_low_period = 617.283951
+# 
+# Warning: por to CB BFM is not connected, internal por is used.
+# 
+# 
+# Warning: por to CB BFM is not connected, internal por is used.
+# 
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_3.UI
+# Warning: The frequency of the reference clock signal differs from the specified frequency (100.0 mhz).
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_0.UI
+# Warning: The frequency of the reference clock signal differs from the specified frequency (100.0 mhz).
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_1.UI
+
+# Warning: The frequency of the reference clock signal differs from the specified frequency (100.0 mhz).
+# Info: hierarchical_name = Z80_vlg_vec_tst.i1.\comb_183|u_sys_pll|sys_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL .cyclonev_fractional_pll_encrypted_inst...inst_pll_phase_2.UI
+# Warning: The frequency of the reference clock signal differs from the specified frequency (100.0 mhz).
+# ** Note: $finish    : Waveform.vwf.vt(113)
+#    Time: 1 us  Iteration: 0  Instance: /Z80_vlg_vec_tst
+
+# End time: 23:15:56 on Jan 10,2026, Elapsed time: 0:00:11
+# Errors: 0, Warnings: 6
+
+Completed successfully. 
+
+**** Converting ModelSim VCD to vector waveform ****
+
+Reading D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/Waveform.vwf...
+
+Reading D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/Z80.msim.vcd...
+
+Processing channel transitions... 
+
+Warning: addr_bus[15] - signal not found in VCD.
+
+Warning: addr_bus[14] - signal not found in VCD.
+
+Warning: addr_bus[13] - signal not found in VCD.
+
+Warning: addr_bus[12] - signal not found in VCD.
+
+Warning: addr_bus[11] - signal not found in VCD.
+
+Warning: addr_bus[10] - signal not found in VCD.
+
+Warning: addr_bus[9] - signal not found in VCD.
+
+Warning: addr_bus[8] - signal not found in VCD.
+
+Warning: addr_bus[7] - signal not found in VCD.
+
+Warning: addr_bus[6] - signal not found in VCD.
+
+Warning: addr_bus[5] - signal not found in VCD.
+
+Warning: addr_bus[4] - signal not found in VCD.
+
+Warning: addr_bus[3] - signal not found in VCD.
+
+Warning: addr_bus[2] - signal not found in VCD.
+
+Warning: addr_bus[1] - signal not found in VCD.
+
+Warning: addr_bus[0] - signal not found in VCD.
+
+Warning: data_bus[7] - signal not found in VCD.
+
+Warning: data_bus[6] - signal not found in VCD.
+
+Warning: data_bus[5] - signal not found in VCD.
+
+Warning: data_bus[4] - signal not found in VCD.
+
+Warning: data_bus[3] - signal not found in VCD.
+
+Warning: data_bus[2] - signal not found in VCD.
+
+Warning: data_bus[1] - signal not found in VCD.
+
+Warning: data_bus[0] - signal not found in VCD.
+
+Warning: IR_FETCH[7] - signal not found in VCD.
+
+Warning: IR_FETCH[6] - signal not found in VCD.
+
+Warning: IR_FETCH[5] - signal not found in VCD.
+
+Warning: IR_FETCH[4] - signal not found in VCD.
+
+Warning: IR_FETCH[3] - signal not found in VCD.
+
+Warning: IR_FETCH[2] - signal not found in VCD.
+
+Warning: IR_FETCH[1] - signal not found in VCD.
+
+Warning: IR_FETCH[0] - signal not found in VCD.
+
+Warning: IR_READ[7] - signal not found in VCD.
+
+Warning: IR_READ[6] - signal not found in VCD.
+
+Warning: IR_READ[5] - signal not found in VCD.
+
+Warning: IR_READ[4] - signal not found in VCD.
+
+Warning: IR_READ[3] - signal not found in VCD.
+
+Warning: IR_READ[2] - signal not found in VCD.
+
+Warning: IR_READ[1] - signal not found in VCD.
+
+Warning: IR_READ[0] - signal not found in VCD.
+
+Warning: IR_WRITE[7] - signal not found in VCD.
+
+Warning: IR_WRITE[6] - signal not found in VCD.
+
+Warning: IR_WRITE[5] - signal not found in VCD.
+
+Warning: IR_WRITE[4] - signal not found in VCD.
+
+Warning: IR_WRITE[3] - signal not found in VCD.
+
+Warning: IR_WRITE[2] - signal not found in VCD.
+
+Warning: IR_WRITE[1] - signal not found in VCD.
+
+Warning: IR_WRITE[0] - signal not found in VCD.
+
+Warning: OP_FETCH[31] - signal not found in VCD.
+
+Warning: OP_FETCH[30] - signal not found in VCD.
+
+Warning: OP_FETCH[29] - signal not found in VCD.
+
+Warning: OP_FETCH[28] - signal not found in VCD.
+
+Warning: OP_FETCH[27] - signal not found in VCD.
+
+Warning: OP_FETCH[26] - signal not found in VCD.
+
+Warning: OP_FETCH[25] - signal not found in VCD.
+
+Warning: OP_FETCH[24] - signal not found in VCD.
+
+Warning: OP_FETCH[23] - signal not found in VCD.
+
+Warning: OP_FETCH[22] - signal not found in VCD.
+
+Warning: OP_FETCH[21] - signal not found in VCD.
+
+Warning: OP_FETCH[20] - signal not found in VCD.
+
+Warning: OP_FETCH[19] - signal not found in VCD.
+
+Warning: OP_FETCH[18] - signal not found in VCD.
+
+Warning: OP_FETCH[17] - signal not found in VCD.
+
+Warning: OP_FETCH[16] - signal not found in VCD.
+
+Warning: OP_FETCH[15] - signal not found in VCD.
+
+Warning: OP_FETCH[14] - signal not found in VCD.
+
+Warning: OP_FETCH[13] - signal not found in VCD.
+
+Warning: OP_FETCH[12] - signal not found in VCD.
+
+Warning: OP_FETCH[11] - signal not found in VCD.
+
+Warning: OP_FETCH[10] - signal not found in VCD.
+
+Warning: OP_FETCH[9] - signal not found in VCD.
+
+Warning: OP_FETCH[8] - signal not found in VCD.
+
+Warning: OP_FETCH[7] - signal not found in VCD.
+
+Warning: OP_FETCH[6] - signal not found in VCD.
+
+Warning: OP_FETCH[5] - signal not found in VCD.
+
+Warning: OP_FETCH[4] - signal not found in VCD.
+
+Warning: OP_FETCH[3] - signal not found in VCD.
+
+Warning: OP_FETCH[2] - signal not found in VCD.
+
+Warning: OP_FETCH[1] - signal not found in VCD.
+
+Warning: OP_FETCH[0] - signal not found in VCD.
+
+Warning: OP_READ[31] - signal not found in VCD.
+
+Warning: OP_READ[30] - signal not found in VCD.
+
+Warning: OP_READ[29] - signal not found in VCD.
+
+Warning: OP_READ[28] - signal not found in VCD.
+
+Warning: OP_READ[27] - signal not found in VCD.
+
+Warning: OP_READ[26] - signal not found in VCD.
+
+Warning: OP_READ[25] - signal not found in VCD.
+
+Warning: OP_READ[24] - signal not found in VCD.
+
+Warning: OP_READ[23] - signal not found in VCD.
+
+Warning: OP_READ[22] - signal not found in VCD.
+
+Warning: OP_READ[21] - signal not found in VCD.
+
+Warning: OP_READ[20] - signal not found in VCD.
+
+Warning: OP_READ[19] - signal not found in VCD.
+
+Warning: OP_READ[18] - signal not found in VCD.
+
+Warning: OP_READ[17] - signal not found in VCD.
+
+Warning: OP_READ[16] - signal not found in VCD.
+
+Warning: OP_READ[15] - signal not found in VCD.
+
+Warning: OP_READ[14] - signal not found in VCD.
+
+Warning: OP_READ[13] - signal not found in VCD.
+
+Warning: OP_READ[12] - signal not found in VCD.
+
+Warning: OP_READ[11] - signal not found in VCD.
+
+Warning: OP_READ[10] - signal not found in VCD.
+
+Warning: OP_READ[9] - signal not found in VCD.
+
+Warning: OP_READ[8] - signal not found in VCD.
+
+Warning: OP_READ[7] - signal not found in VCD.
+
+Warning: OP_READ[6] - signal not found in VCD.
+
+Warning: OP_READ[5] - signal not found in VCD.
+
+Warning: OP_READ[4] - signal not found in VCD.
+
+Warning: OP_READ[3] - signal not found in VCD.
+
+Warning: OP_READ[2] - signal not found in VCD.
+
+Warning: OP_READ[1] - signal not found in VCD.
+
+Warning: OP_READ[0] - signal not found in VCD.
+
+Warning: OP_WRITE[31] - signal not found in VCD.
+
+Warning: OP_WRITE[30] - signal not found in VCD.
+
+Warning: OP_WRITE[29] - signal not found in VCD.
+
+Warning: OP_WRITE[28] - signal not found in VCD.
+
+Warning: OP_WRITE[27] - signal not found in VCD.
+
+Warning: OP_WRITE[26] - signal not found in VCD.
+
+Warning: OP_WRITE[25] - signal not found in VCD.
+
+Warning: OP_WRITE[24] - signal not found in VCD.
+
+Warning: OP_WRITE[23] - signal not found in VCD.
+
+Warning: OP_WRITE[22] - signal not found in VCD.
+
+Warning: OP_WRITE[21] - signal not found in VCD.
+
+Warning: OP_WRITE[20] - signal not found in VCD.
+
+Warning: OP_WRITE[19] - signal not found in VCD.
+
+Warning: OP_WRITE[18] - signal not found in VCD.
+
+Warning: OP_WRITE[17] - signal not found in VCD.
+
+Warning: OP_WRITE[16] - signal not found in VCD.
+
+Warning: OP_WRITE[15] - signal not found in VCD.
+
+Warning: OP_WRITE[14] - signal not found in VCD.
+
+Warning: OP_WRITE[13] - signal not found in VCD.
+
+Warning: OP_WRITE[12] - signal not found in VCD.
+
+Warning: OP_WRITE[11] - signal not found in VCD.
+
+Warning: OP_WRITE[10] - signal not found in VCD.
+
+Warning: OP_WRITE[9] - signal not found in VCD.
+
+Warning: OP_WRITE[8] - signal not found in VCD.
+
+Warning: OP_WRITE[7] - signal not found in VCD.
+
+Warning: OP_WRITE[6] - signal not found in VCD.
+
+Warning: OP_WRITE[5] - signal not found in VCD.
+
+Warning: OP_WRITE[4] - signal not found in VCD.
+
+Warning: OP_WRITE[3] - signal not found in VCD.
+
+Warning: OP_WRITE[2] - signal not found in VCD.
+
+Warning: OP_WRITE[1] - signal not found in VCD.
+
+Warning: OP_WRITE[0] - signal not found in VCD.
+
+Warning: PC[15] - signal not found in VCD.
+
+Warning: PC[14] - signal not found in VCD.
+
+Warning: PC[13] - signal not found in VCD.
+
+Warning: PC[12] - signal not found in VCD.
+
+Warning: PC[11] - signal not found in VCD.
+
+Warning: PC[10] - signal not found in VCD.
+
+Warning: PC[9] - signal not found in VCD.
+
+Warning: PC[8] - signal not found in VCD.
+
+Warning: PC[7] - signal not found in VCD.
+
+Warning: PC[6] - signal not found in VCD.
+
+Warning: PC[5] - signal not found in VCD.
+
+Warning: PC[4] - signal not found in VCD.
+
+Warning: PC[3] - signal not found in VCD.
+
+Warning: PC[2] - signal not found in VCD.
+
+Warning: PC[1] - signal not found in VCD.
+
+Warning: PC[0] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[7] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[6] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[5] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[4] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[3] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[2] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[1] - signal not found in VCD.
+
+Warning: RF:comb_43|reg_arr[0] - signal not found in VCD.
+
+Warning: FPGA_CLK1_50 - signal not found in VCD.
+
+Writing the resulting VWF to D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/qsim/Z80_20260110231557.sim.vwf
+
+Finished VCD to VWF conversion.
+
+Completed successfully. 
+
+All completed.

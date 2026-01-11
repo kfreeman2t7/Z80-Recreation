@@ -1,0 +1,50 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll.vo}
+vlib sys_pll
+vmap sys_pll sys_pll
+vlog -vlog01compat -work sys_pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig.vo}
+vlib pll_reconfig
+vmap pll_reconfig pll_reconfig
+vlog -vlog01compat -work pll_reconfig +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll.vo}
+vlib pll
+vmap pll pll
+vlog -vlog01compat -work pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll.v}
+vlog -vlog01compat -work sys_pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/sys_pll/sys_pll_0002.v}
+vlog -vlog01compat -work pll_reconfig +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig/altera_pll_reconfig_top.v}
+vlog -vlog01compat -work pll_reconfig +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig/altera_pll_reconfig_core.v}
+vlog -vlog01compat -work pll_reconfig +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll_reconfig/altera_std_synchronizer.v}
+vlog -vlog01compat -work pll +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/pll/pll/pll_0002.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source/vpg_mode.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source/vpg.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source/vga_generator.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/vpg_source/pll_controller.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/I2C_WRITE_WDATA.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/I2C_HDMI_Config.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/I2C_Controller.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/DE10_Nano_HDMI_TX.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/HDMI/AUDIO_IF.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/ROM {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/ROM/text_rom.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/PPU.v}
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.v}
+
+vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L sys_pll -L pll_reconfig -L pll -voptargs="+acc"  Z80
+
+add wave *
+view structure
+view signals
+run -all

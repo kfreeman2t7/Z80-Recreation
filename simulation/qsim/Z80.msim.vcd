@@ -1,0 +1,416 @@
+$comment
+	File created using the following command:
+		vcd file Z80.msim.vcd -direction
+$end
+$date
+	Sat Jan 10 23:15:56 2026
+$end
+$version
+	Questa Intel Starter FPGA Edition Version 2021.2
+$end
+$timescale
+	1ps
+$end
+
+$scope module Z80_vlg_vec_tst $end
+
+$scope module i1 $end
+$var tri0 1 ! gnd $end
+$var tri1 1 " vcc $end
+$var tri1 1 # devclrn $end
+$var tri1 1 $ devpor $end
+$var tri0 1 % aload_in $end
+$var tri0 1 & sclr_in $end
+$var tri0 1 ' asdata_in $end
+$var tri1 1 ( prn_in $end
+$var tri1 1 ) clrn_in $end
+$var tri1 1 * devclrn_in $end
+$var tri1 1 + devpor_in $end
+$var tri0 1 , aload_in $end
+$var tri0 1 - sclr_in $end
+$var tri0 1 . asdata_in $end
+$var tri1 1 / devclrn_in $end
+$var tri1 1 0 devpor_in $end
+$var tri1 1 1 ena_in $end
+$var tri0 1 2 sclr_in $end
+$var tri1 1 3 ena_in $end
+$var tri1 1 4 ena_in $end
+$var tri1 1 5 ena_in $end
+$var tri0 1 6 sclr_in $end
+$var tri0 1 7 sclr_in $end
+$var tri1 1 8 ena_in $end
+$var tri1 1 9 clrn_in $end
+$var tri1 1 : clrn_in $end
+$var tri1 1 ; ena_in $end
+$var tri1 1 < ena_in $end
+$var tri0 1 = sclr_in $end
+$var tri1 1 > ena_in $end
+$var tri1 1 ? ena_in $end
+$var tri1 1 @ ena_in $end
+$var tri1 1 A ena_in $end
+$var tri0 1 B sclr_in $end
+$var tri1 1 C ena_in $end
+$var tri0 1 D sclr_in $end
+$var tri1 1 E ena_in $end
+$var tri1 1 F ena_in $end
+$var tri1 1 G ena_in $end
+$var tri1 1 H ena_in $end
+$var tri1 1 I ena_in $end
+$var tri1 1 J ena_in $end
+$var tri1 1 K ena_in $end
+$var tri1 1 L ena_in $end
+$var tri1 1 M ena_in $end
+$var tri1 1 N ena_in $end
+$var tri1 1 O ena_in $end
+$var tri1 1 P prn_in $end
+$var tri1 1 Q ena_in $end
+$var tri1 1 R ena_in $end
+$var tri1 1 S ena_in $end
+$var tri1 1 T ena_in $end
+$var tri1 1 U ena_in $end
+$var tri1 1 V ena_in $end
+$var tri1 1 W ena_in $end
+$var tri1 1 X ena_in $end
+$var tri1 1 Y ena_in $end
+$var tri1 1 Z ena_in $end
+$var tri0 1 [ sclr_in $end
+$var tri1 1 \ ena_in $end
+$var tri1 1 ] ena_in $end
+$var tri1 1 ^ ena_in $end
+$var tri1 1 _ ena_in $end
+$var tri1 1 ` ena_in $end
+$var tri0 1 a sclr_in $end
+$var tri1 1 b ena_in $end
+$var tri0 1 c sclr_in $end
+$var tri1 1 d ena_in $end
+$var tri0 1 e sclr_in $end
+$var tri1 1 f ena_in $end
+$var tri1 1 g ena_in $end
+$var tri0 1 h sclr_in $end
+$var tri1 1 i ena_in $end
+$var tri0 1 j sclr_in $end
+$var tri1 1 k clrn_in $end
+$var tri0 1 l sclr_in $end
+$var tri1 1 m ena_in $end
+$var tri0 1 n sclr_in $end
+$var tri0 1 o sload_in $end
+$var tri0 1 p asdata_in $end
+$var tri1 1 q ena_in $end
+$var tri0 1 r asdata_in $end
+$var tri1 1 s ena_in $end
+$var tri0 1 t asdata_in $end
+$var tri0 1 u sclr_in $end
+$var tri1 1 v ena_in $end
+$var tri1 1 w ena_in $end
+$var tri0 1 x asdata_in $end
+$var tri1 1 y ena_in $end
+$var tri1 1 z ena_in $end
+$var tri0 1 { sclr_in $end
+$var tri1 1 | ena_in $end
+$var tri0 1 } asdata_in $end
+$var tri1 1 ~ ena_in $end
+$var tri1 1 !! ena_in $end
+$var tri1 1 "! ena_in $end
+$var tri0 1 #! asdata_in $end
+$var tri0 1 $! asdata_in $end
+$var tri0 1 %! asdata_in $end
+$var tri0 1 &! sload_in $end
+$var tri1 1 '! ena_in $end
+$var tri1 1 (! ena_in $end
+$var tri1 1 )! ena_in $end
+$var tri1 1 *! clrn_in $end
+$var tri1 1 +! ena_in $end
+$var tri1 1 ,! ena_in $end
+$var tri0 1 -! sload_in $end
+$var tri0 1 .! asdata_in $end
+$var tri1 1 /! clrn_in $end
+$var tri1 1 0! ena_in $end
+$var tri1 1 1! ena_in $end
+$var tri0 1 2! asdata_in $end
+$var tri1 1 3! ena_in $end
+$var tri0 1 4! asdata_in $end
+$var tri0 1 5! asdata_in $end
+$var tri0 1 6! asdata_in $end
+$var tri0 1 7! asdata_in $end
+$var tri0 1 8! asdata_in $end
+$var tri0 1 9! asdata_in $end
+$var tri0 1 :! asdata_in $end
+$var tri0 1 ;! asdata_in $end
+$var tri1 1 <! clrn_in $end
+$var tri1 1 =! ena_in $end
+$var tri1 1 >! ena_in $end
+$var tri0 1 ?! sclr_in $end
+$var tri1 1 @! ena_in $end
+$var tri0 1 A! sclr_in $end
+$var tri0 1 B! sload_in $end
+$var tri0 1 C! sclr_in $end
+$var tri1 1 D! ena_in $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0%
+0&
+1'
+1(
+0)
+1*
+1+
+0,
+0-
+1.
+1/
+10
+11
+12
+03
+04
+05
+06
+17
+18
+09
+0:
+0;
+0<
+1=
+0>
+0?
+1@
+0A
+1B
+1C
+1D
+1E
+1F
+1G
+1H
+1I
+1J
+1K
+1L
+1M
+1N
+1O
+1P
+1Q
+1R
+1S
+1T
+1U
+1V
+1W
+1X
+1Y
+1Z
+1[
+1\
+1]
+1^
+1_
+0`
+1a
+1b
+1c
+1d
+1e
+1f
+1g
+0h
+0i
+0j
+0k
+0l
+0m
+0n
+1o
+0p
+0q
+0r
+0s
+0t
+1u
+0v
+0w
+0x
+0y
+0z
+1{
+1|
+0}
+0~
+0!!
+0"!
+0#!
+0$!
+0%!
+1&!
+0'!
+0(!
+1)!
+0*!
+0+!
+0,!
+0-!
+0.!
+1/!
+00!
+01!
+02!
+03!
+04!
+05!
+06!
+07!
+08!
+09!
+0:!
+0;!
+1<!
+0=!
+0>!
+0?!
+0@!
+0A!
+0B!
+1C!
+1D!
+0!
+1"
+1#
+1$
+$end
+#10000
+1`
+1)
+14
+07
+13
+#20102
+x`
+x)
+x4
+x7
+x3
+#25000
+0`
+0)
+04
+17
+03
+#30000
+1`
+1)
+14
+07
+13
+#40104
+x`
+x)
+x4
+x7
+x3
+#45000
+0`
+0)
+04
+17
+03
+#50000
+1`
+1)
+14
+07
+13
+#60106
+x`
+x)
+x4
+x7
+x3
+#65000
+0`
+0)
+04
+17
+03
+#70000
+1`
+1)
+14
+07
+13
+#80108
+x`
+x)
+x4
+x7
+x3
+#85000
+0`
+0)
+04
+17
+03
+#90000
+1`
+1)
+14
+07
+13
+#100110
+x`
+x)
+x4
+x7
+x3
+#105000
+0`
+0)
+04
+17
+03
+#110000
+1`
+1)
+14
+07
+13
+#120110
+x`
+x)
+x4
+x7
+x3
+#125000
+0`
+0)
+04
+17
+03
+#130000
+1`
+1)
+14
+07
+13
+#140110
+x`
+x)
+x4
+x7
+x3
+#145000
+0`
+0)
+04
+17
+03
+#150000
+1`
+1)
+14
+07
+13
+#1000000

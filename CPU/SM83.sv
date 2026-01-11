@@ -1,0 +1,215 @@
+import states::*;
+	
+
+module decoder(code, ic);
+	input wire [7:0] code;
+
+	output opcode ic;
+	
+	wire [1:0] x = code[7:6];
+	wire [2:0] y = code[5:3];
+	wire [2:0] z = code[2:0];
+	wire q = code[3];
+	wire [1:0] p = code[5:4];
+	
+	always @(*) begin
+		case(x)
+			0: begin
+				case(z)
+					0: begin
+							case(y)
+								0: ic <= C_NOP;
+								1: ic <= C_EX;
+								2: ic <= C_DJNZ;
+								3: ic <= C_JR;
+								4: ic <= C_JR2;
+								5: ic <= C_JR2;
+								6: ic <= C_JR2;
+								7: ic <= C_JR2;
+								default: ic <= C_NOP;
+							endcase
+						end
+					1: begin
+							case(q)
+								0: ic <= C_16BIT_LDIMM;
+								1: ic <= C_16BIT_ADDHL;
+								default: ic <= C_NOP;
+							endcase
+						end
+					2: begin 
+							case(q)
+								0: begin 
+										case(p)
+											0: ic <= C_WRITE_INDIRECT;
+											1: ic <= C_WRITE_INDIRECT;
+											2: ic <= C_WRITE_INDIRECT_HL_IMM;
+											3: ic <= C_WRITE_INDIRECT_A_IMM;
+											default: ic <= C_NOP;
+										endcase
+									end
+								1: begin 
+										case(p)
+											0: ic <= C_LOAD_INDIRECT;
+											1: ic <= C_LOAD_INDIRECT;
+											2: ic <= C_LOAD_INDIRECT_HL_IMM;
+											3: ic <= C_LOAD_INDIRECT_A_IMM;
+											default: ic <= C_NOP;
+										endcase
+									end
+							endcase
+						end
+					3: ic <= C_16BIT_INCDEC;
+					4: ic <= C_INC;
+					5: ic <= C_DEC;
+					6: ic <= C_LOAD_IMM;
+					7: ic <= C_ACC;
+					default: ic <= C_NOP;
+				endcase
+			end
+			
+			1: begin
+				if(z == 6 && y == 6) begin
+					ic <= C_HALT;
+				end else begin
+					ic <= C_LOAD;
+				end
+			end
+			
+			2: ic <= C_ALU;
+			
+			3: begin
+				// TODO
+				case(z)
+					6: ic <= C_ALU_IMM;
+					default: ic <= C_NOP;
+				endcase
+			end
+			
+			default: ic <= C_NOP;
+		endcase	
+	end
+endmodule
+
+
+
+module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, registers);
+
+	//bus enums
+	parameter BUS_PC = 0;
+	parameter BUS_HL = 1;
+	
+	parameter N_data = 8;
+	parameter N_ram_addr = 16;
+	parameter N_reg_addr = 3;
+	
+	output wire [7:0] registers [7:0];
+	
+	
+	input wire CLK, RESET;
+	input wire [7:0] data_bus;
+	output wire [15:0] addr_bus;
+	output wire [7:0] write_data;
+	
+	
+	
+	
+	
+	input wire ACK;
+	output wire REQ_out, ram_wren;
+	
+	opcode OP_FETCH, OP_READ, OP_WRITE;
+	reg [7:0] IR_FETCH, IR_READ, IR_WRITE;
+	reg REQ; assign REQ_out = REQ;
+	wire [2:0] addr_sel;
+	clock_cycle T;
+	
+	reg [15:0] PC;
+	
+	wire [15:0] ram_addr;
+	assign addr_bus = ram_addr;
+	
+	wire fetch_enable = (ram_addr == PC) && ~RESET;
+	
+	
+	//decoder
+	opcode OP_TEMP;
+	decoder ohd(data_bus, OP_TEMP);
+	
+	
+	
+	//write control signals
+	wire load = (OP_WRITE == C_LOAD || OP_WRITE == C_LOAD_IMM);
+	wire alu_op = (OP_WRITE == C_ALU || OP_WRITE == C_ALU_IMM);
+	wire rp_load = (
+		OP_WRITE == C_16BIT_LDIMM
+	);
+	//read control signals
+	wire load_imm = (
+	OP_READ == C_LOAD_IMM 
+	|| OP_READ == C_16BIT_LDIMM 
+	|| OP_READ == C_ALU_IMM
+	|| OP_READ == C_JR
+	);
+	
+	wire load_pc = (OP_WRITE == C_JR);
+	
+	wire [7:0] displacement;
+	wire pending_req = (ACK == 0) && (REQ == 1);
+	
+	wire data_is_imm = load_imm || rp_load;
+	wire valid_data = ~data_is_imm;
+
+	always @ (posedge CLK) begin
+		if(RESET) begin
+			T <= T1;
+			PC <= 0;
+			REQ <= 0;
+		end else begin
+			if(~pending_req) begin
+				REQ <= 0;
+				case(T)
+					T1: T <= T2;
+					T2: T <= T3;
+					T3: T <= T1;
+					default: T <= T1;
+				endcase
+			end else begin
+				T <= T;
+			end
+			
+			if(pending_req) begin
+			end else if(T == T1) begin 						//T2 cycle
+				if(fetch_enable && valid_data) begin
+					OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
+				end else begin
+					OP_FETCH <= C_NOP; IR_FETCH <= 0;
+				end
+			end else if(T == T2) begin 						//T3 cycle
+				if(load_pc) begin
+					PC <= PC + {{8{displacement[7]}},displacement} - 1;
+					REQ <= 0;
+					OP_FETCH <= C_NOP; IR_FETCH <= 0;
+				end
+			end else	if(T == T3) begin 						//T1 cycle
+				OP_WRITE <= OP_READ; IR_WRITE <= IR_READ;
+				OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
+				//set fetch IR
+				if(fetch_enable && ~load_pc) begin
+					PC <= PC + 1; //increment PC
+					REQ <= 1;
+				end
+				
+				if(~fetch_enable && ~load_pc) begin
+					REQ <= 1;
+				end
+			end
+		end
+	end
+	
+	//RF
+	reg wren_peek;
+	assign wren_peek = ram_wren;
+	RF regfile(CLK, T, PC, IR_READ, IR_WRITE, write_data, ram_wren, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+	
+endmodule
+

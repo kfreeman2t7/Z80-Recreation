@@ -104,8 +104,9 @@ module Z80 (
 	parameter ram_addr_size = 16;
 	
 	//control signals
-	gb_clock #(.value(10000000), .half_value((10000000/2)), .bits(32)) vclock(FPGA_CLK1_50, core_vCLK);
 	wire core_vCLK;
+	gb_clock #(.value(10000000), .half_value((10000000/2)), .bits(32)) vclock(FPGA_CLK1_50, core_vCLK);
+	
 	wire core_CLK = core_vCLK;
 	wire mem_CLK = core_vCLK;
 	wire REQ, ACK;
@@ -179,16 +180,16 @@ module Z80 (
 	wire [23:0] HDMI_rgb;
 	
 	//HDMI
-	DE10_Nano_HDMI_TX(
-	ADC_CONVST, ADC_SCK, ADC_SDI, ADC_SDO, 
-	FPGA_CLK1_50, FPGA_CLK2_50, FPGA_CLK3_50,
-	HDMI_I2C_SCL, HDMI_I2C_SDA, HDMI_I2S,
-	HDMI_LRCLK, HDMI_MCLK, HDMI_SCLK, 
-	HDMI_TX_CLK, HDMI_TX_D, HDMI_TX_DE, HDMI_TX_HS, HDMI_TX_INT, HDMI_TX_VS,
-	2'b0, 1'b0,
-	HDMI_x, HDMI_y, HDMI_rgb
-	);
+	//DE10_Nano_HDMI_TX(
+	//ADC_CONVST, ADC_SCK, ADC_SDI, ADC_SDO, 
+	//FPGA_CLK1_50, FPGA_CLK2_50, FPGA_CLK3_50,
+	//HDMI_I2C_SCL, HDMI_I2C_SDA, HDMI_I2S,
+	//HDMI_LRCLK, HDMI_MCLK, HDMI_SCLK, 
+	//HDMI_TX_CLK, HDMI_TX_D, HDMI_TX_DE, HDMI_TX_HS, HDMI_TX_INT, HDMI_TX_VS,
+	//2'b0, 1'b0,
+	//HDMI_x, HDMI_y, HDMI_rgb
+	//);
 	
-	PPU(FPGA_CLK1_50, 8'b0, 3'b0, HDMI_x, HDMI_y, HDMI_rgb, registers);
+	//PPU(FPGA_CLK1_50, 8'b0, 3'b0, HDMI_x, HDMI_y, HDMI_rgb, registers);
 	
 endmodule

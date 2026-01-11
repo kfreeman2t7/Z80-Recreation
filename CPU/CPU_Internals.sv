@@ -1,3 +1,5 @@
+import states::*;
+
 module onehot_decoder(addr, sel);
 	parameter addr_size = 8;
 	
@@ -32,6 +34,10 @@ endmodule
 	
 	
 module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+	//bus enums
+	parameter BUS_PC = 0;
+	parameter BUS_HL = 1;
+	
 	parameter data_size = 8;
 	parameter addr_size = 3;
 	parameter ram_addr_size = 16;
@@ -40,6 +46,13 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 	parameter H = 3'b100;
 	parameter L = 3'b101;
 	parameter HL = 3'b110;
+	
+	
+	//registers
+	reg [data_size-1:0] ram_write_data, alu_in;
+	reg [ram_addr_size-1:0] SP, ram_write_addr_reg; //special resigsters
+	reg [data_size-1:0] reg_arr [(1<<addr_size)-1:0]; //general purpose registers
+	reg [2:0] addr_reg;
 	
 	//i/o
 	input wire CLK, load, load_imm, rp_load, alu_op;
@@ -52,26 +65,26 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 	output wire [data_size-1:0] ram_write;
 	output wire [ram_addr_size-1:0] ram_read_addr;
 	output wire [data_size-1:0] displacement;
-	output wire [data_size-1:0] registers [(1<<addr_size)-1:0] = reg_arr;
+	output wire [data_size-1:0] registers [(1<<addr_size)-1:0];
 	output wire ram_wren;
 
-	
+	//i/o assignments
+	assign addr_sel = addr_reg;
+	assign registers = reg_arr;
 	
 	//address wires
 	wire [2:0] addr_A = IR_WRITE[5:3];
 	wire [2:0] addr_B = IR_WRITE[2:0];
 	wire [1:0] rp_addr = IR_WRITE[5:4];
 	
-	//registers
-	reg [data_size-1:0] ram_write_data, alu_in;
-	reg [ram_addr_size-1:0] SP, ram_write_addr_reg; //special resigsters
-	reg [data_size-1:0] reg_arr [(1<<addr_size)-1:0]; //general purpose registers
+	
+	
 	
 	//data wires
 	reg [ram_addr_size-1:0] hl_bus;
 	wire [2:0] [ram_addr_size-1:0] ram_read_bus;
 	assign ram_read_bus[BUS_PC] = PC;
-	assign ram_read_bus[BUS_HL] = hl_bus;
+	assign ram_read_bus[BUS_HL] = {reg_arr[H], reg_arr[L]};//hl_bus;
 	
 	wire [ram_addr_size-1:0] ram_write_addr = ram_write_addr_reg;
 	assign ram_write = ram_write_data;
@@ -81,9 +94,9 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 	
 	always @(*) begin
 		if(use_bus_hl) begin
-			addr_sel <= BUS_HL;
+			addr_reg <= BUS_HL;
 		end else begin
-			addr_sel <= BUS_PC;
+			addr_reg <= BUS_PC;
 		end
 	end
 	
@@ -95,7 +108,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 	//ALU
 	reg [data_size-1:0] F;
 	wire [data_size-1:0] alu_buffer, flag_buffer;
-	ALU #(.bit_size(8)) (CLK,reg_arr[A],reg_arr[addr_B],F,alu_buffer,addr_A,flag_buffer);
+	ALU #(.bit_size(8)) arithlogic(CLK,reg_arr[A],reg_arr[addr_B],F,alu_buffer,addr_A,flag_buffer);
 	
 
 
@@ -172,6 +185,8 @@ module ALU(CLK,A,r,f,reg_out,mode,flags_w);
 	input wire [2:0] mode;
 	input wire [bit_size-1:0] A,r,f;
 	output wire [bit_size-1:0] reg_out, flags_w;
+	
+	wire [bit_size:0] adc = r + f[0];
 
 	reg [bit_size-1:0] res, F;
 	
@@ -187,7 +202,7 @@ module ALU(CLK,A,r,f,reg_out,mode,flags_w);
 	(mode == 3) & (A[7] != adc[7]) & (res[7] != A[7])
 	);
 	
-	wire [bit_size:0] adc = r + f[0];
+	
 	
 	always @(posedge CLK) begin
 		case(mode)
