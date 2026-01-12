@@ -128,8 +128,6 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 	wire [15:0] ram_addr;
 	assign addr_bus = ram_addr;
 	
-	wire fetch_enable = (ram_addr == PC) && ~RESET;
-	
 	
 	//decoder
 	opcode OP_TEMP;
@@ -152,6 +150,13 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 	);
 	
 	wire load_pc = (OP_WRITE == C_JR);
+	
+	wire op_is_store = (OP_FETCH == C_LOAD && IR_FETCH[2:0] == 3'b110);
+	wire read_conflict = op_is_store && (OP_READ != C_NOP);
+	
+	wire insert_gap = read_conflict;
+	
+	wire fetch_enable = (ram_addr == PC) && ~RESET && ~insert_gap;
 	
 	wire [7:0] displacement;
 	wire pending_req = (ACK == 0) && (REQ == 1);
@@ -181,6 +186,8 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 			end else if(T == T1) begin 						//T2 cycle
 				if(fetch_enable && valid_data) begin
 					OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
+				end else if(insert_gap) begin 
+					OP_FETCH <= OP_TEMP; IR_FETCH <= data_bus;
 				end else begin
 					OP_FETCH <= C_NOP; IR_FETCH <= 0;
 				end
@@ -191,8 +198,15 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 					OP_FETCH <= C_NOP; IR_FETCH <= 0;
 				end
 			end else	if(T == T3) begin 						//T1 cycle
+				
 				OP_WRITE <= OP_READ; IR_WRITE <= IR_READ;
-				OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
+				
+				if(insert_gap) begin
+					OP_READ <= C_NOP; IR_READ <= 0;
+				end else begin
+					OP_READ <= OP_FETCH; IR_READ <= IR_FETCH;
+				end
+				
 				//set fetch IR
 				if(fetch_enable && ~load_pc) begin
 					PC <= PC + 1; //increment PC
@@ -209,7 +223,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 	//RF
 	reg wren_peek;
 	assign wren_peek = ram_wren;
-	RF regfile(CLK, T, PC, IR_READ, IR_WRITE, write_data, ram_wren, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+	RF regfile(CLK, RESET, T, PC, IR_READ, IR_WRITE, write_data, ram_wren, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
 	
 endmodule
 

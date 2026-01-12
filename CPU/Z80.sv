@@ -107,8 +107,8 @@ module Z80 (
 	wire core_vCLK;
 	gb_clock #(.value(10000000), .half_value((10000000/2)), .bits(32)) vclock(FPGA_CLK1_50, core_vCLK);
 	
-	wire core_CLK = core_vCLK;
-	wire mem_CLK = core_vCLK;
+	wire core_CLK = FPGA_CLK1_50;//core_vCLK;
+	wire mem_CLK = FPGA_CLK1_50;//core_vCLK;
 	wire REQ, ACK;
 	
 	reg FORCE_RESET = 1;
@@ -119,7 +119,7 @@ module Z80 (
 	wire [rom_addr_size-1:0] rom_addr;
 	
 	wire [data_size-1:0] ram_read_data, ram_write_data;
-	wire [ram_addr_size:0] ram_read_addr, ram_write_addr;
+	wire [ram_addr_size-1:0] ram_read_addr, ram_write_addr;
 	wire [core_addr_size-1:0] [ram_addr_size-1:0] core_to_ram_read_addr, core_to_ram_write_addr;
 	wire [core_addr_size-1:0] [data_size-1:0] core_to_ram_write_data ;
 	wire [core_addr_size-1:0] [0:0] core_to_ram_wren;

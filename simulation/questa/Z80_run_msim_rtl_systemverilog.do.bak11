@@ -15,7 +15,7 @@ vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Re
 
 vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v}
 
-vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  Z80
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb
 
 add wave *
 view structure

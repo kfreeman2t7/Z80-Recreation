@@ -1,17 +1,19 @@
-module testbench;
-	timeunit 1ns;
-	timeprecision 100ps;
+`timescale 1ns/100ps
+module tb;
 	
 	reg clk;
 	
-	always #5 clk = ~clk;
+	always #20 clk = ~clk;
 	
 	initial begin
 		clk = 0;
-		
+		#50000;
+		$stop;
+		$finish;
 	end
 	
-	Z80(
-		.FPGA_CLK1_50(clk)
+	Z80 cpu(
+		.FPGA_CLK1_50(clk),
+		.KEY(2'b11)
 	);
 endmodule

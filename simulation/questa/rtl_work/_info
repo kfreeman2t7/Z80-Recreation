@@ -11,11 +11,11 @@ z2
 cModel Technology
 Z0 dD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/questa
 T_opt
-!s110 1768160088
-V:a=E]<9=I8Z_n_Ul[1_2<1
-04 3 4 work Z80 fast 0
-=1-244bfe596bc2-6963fb58-37-15470
-!s124 OEM10U12 
+!s110 1768183034
+VHjnSSb^MPPGhVJH3T<hZ62
+04 2 4 work tb fast 0
+=1-244bfe596bc2-696454fa-1e5-15d10
+!s124 OEM10U13 
 o-quiet -auto_acc_if_foreign -work work -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work +acc
 Z1 tCvgOpt 0
 n@_opt
@@ -23,25 +23,25 @@ OL;O;2021.2;73
 vALU
 Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
 Z3 DXx4 work 6 states 0 22 imT8U`mQbYV>O=:[57EWe1
-Z4 DXx4 work 21 CPU_Internals_sv_unit 0 22 z[?C?8[0f2>L`YSD_VD1o0
-Z5 !s110 1768160086
+Z4 DXx4 work 21 CPU_Internals_sv_unit 0 22 EkNXiXJk<hf]BRo6:ZW[?1
+Z5 !s110 1768183033
 Z6 VDg1SIo80bB@j0V0VzS_@n1
 r1
 !s85 0
 !i10b 1
-!s100 kJ87S4N=^ZfMe_8Dm=^?<1
-IK8lmS0eR4[d1L>9cO=@@R0
+!s100 NSZ9aUQ7Z:9Bc8ORPE2=32
+IURDlSfUlA]j4eVG7c4LK<3
 Z7 !s105 CPU_Internals_sv_unit
 S1
 R0
-Z8 w1768160058
+Z8 w1768183009
 Z9 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv
 Z10 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv
 !i122 6
-L0 179 65
+L0 195 65
 Z11 OL;L;2021.2;73
 31
-Z12 !s108 1768160086.000000
+Z12 !s108 1768183033.000000
 Z13 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv|
 Z14 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv|
 !i113 0
@@ -51,7 +51,7 @@ R1
 n@a@l@u
 varbiter
 R2
-R5
+Z17 !s110 1768183032
 !i10b 1
 !s100 :HT7c`RBAT<:2:K21P;hW3
 IRm1jb`c8ii7obc`WgkRjQ3
@@ -67,7 +67,7 @@ R11
 r1
 !s85 0
 31
-R12
+Z18 !s108 1768183032.000000
 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv|
 !i113 0
@@ -78,12 +78,12 @@ XCPU_Internals_sv_unit
 R2
 R3
 R5
-Vz[?C?8[0f2>L`YSD_VD1o0
+VEkNXiXJk<hf]BRo6:ZW[?1
 r1
 !s85 0
 !i10b 1
-!s100 ]5P@Wb@HUI7BAK?l6Cz0i1
-Iz[?C?8[0f2>L`YSD_VD1o0
+!s100 ;XM41:nDe`D6PGe`;YN903
+IEkNXiXJk<hf]BRo6:ZW[?1
 !i103 1
 S1
 R0
@@ -91,7 +91,7 @@ R8
 R9
 R10
 !i122 6
-Z17 L0 1 0
+Z19 L0 1 0
 R11
 31
 R12
@@ -105,7 +105,7 @@ n@c@p@u_@internals_sv_unit
 vdecoder
 R2
 R3
-Z18 DXx4 work 12 SM83_sv_unit 0 22 f`4>z1lWQD<dmZ2g1IUCZ3
+Z20 DXx4 work 12 SM83_sv_unit 0 22 <P16=CcUVAkg6dkO]K_M83
 R5
 R6
 r1
@@ -113,19 +113,19 @@ r1
 !i10b 1
 !s100 9_K?ZL[OV1Gd;knB0T:UI3
 IDZ<he0OBh5XeV2X^R>oKI0
-Z19 !s105 SM83_sv_unit
+Z21 !s105 SM83_sv_unit
 S1
 R0
-Z20 w1768160018
-Z21 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv
-Z22 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv
+Z22 w1768182430
+Z23 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv
+Z24 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv
 !i122 5
 L0 4 88
 R11
 31
-R12
-Z23 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv|
-Z24 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv|
+R18
+Z25 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv|
+Z26 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv|
 !i113 0
 R15
 R16
@@ -167,8 +167,8 @@ R6
 r1
 !s85 0
 !i10b 1
-!s100 zZ92kOm5nQT]W`CVXXBiP2
-I^C0dH^]7IBJ5__g3<WzYJ1
+!s100 h`Am4Po7SnUzM@8ka@BgP3
+IM28GNFRV;T<9e14hSh2S_2
 R7
 S1
 R0
@@ -176,7 +176,7 @@ R8
 R9
 R10
 !i122 6
-L0 245 17
+L0 261 17
 R11
 31
 R12
@@ -217,7 +217,7 @@ R16
 R1
 vregister_mux
 R2
-R5
+R17
 !i10b 1
 !s100 ZoPQTkif092mIL7:AZhT60
 IaVVg`YG2F<HIlOKL`zW1i1
@@ -233,7 +233,7 @@ R11
 r1
 !s85 0
 31
-R12
+R18
 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv|
 !i113 0
@@ -249,8 +249,8 @@ R6
 r1
 !s85 0
 !i10b 1
-!s100 ;=;AN0ZIQJ]QM=hkDa5F22
-I[J4Po`lJa_Rfn[T=FMC1z1
+!s100 3[GPGI>[k8HkbXk2zB2Ak2
+I]F1aD7ZT`CFhkcObOPcFM2
 R7
 S1
 R0
@@ -258,7 +258,7 @@ R8
 R9
 R10
 !i122 6
-L0 36 142
+L0 36 158
 R11
 31
 R12
@@ -272,27 +272,27 @@ n@r@f
 vSM83
 R2
 R3
-R18
+R20
 R5
 R6
 r1
 !s85 0
 !i10b 1
-!s100 bf6[bTzFB_?JB00HDScEe3
-IGbd:M_ilaaF7:3JPi9A;F3
-R19
+!s100 nV8ddzG<NH1dHB><33mLU2
+InE9OkHocNj1N[l>7Ja2o32
+R21
 S1
 R0
-R20
-R21
 R22
-!i122 5
-L0 95 120
-R11
-31
-R12
 R23
 R24
+!i122 5
+L0 95 134
+R11
+31
+R18
+R25
+R26
 !i113 0
 R15
 R16
@@ -302,25 +302,25 @@ XSM83_sv_unit
 R2
 R3
 R5
-Vf`4>z1lWQD<dmZ2g1IUCZ3
+V<P16=CcUVAkg6dkO]K_M83
 r1
 !s85 0
 !i10b 1
-!s100 hTeD2E8zzEVI=fjf6YKW90
-If`4>z1lWQD<dmZ2g1IUCZ3
+!s100 4YfDdAnfbV85coK5_lgJU0
+I<P16=CcUVAkg6dkO]K_M83
 !i103 1
 S1
 R0
-R20
-R21
 R22
-!i122 5
-R17
-R11
-31
-R12
 R23
 R24
+!i122 5
+R19
+R11
+31
+R18
+R25
+R26
 !i113 0
 R15
 R16
@@ -328,7 +328,7 @@ R1
 n@s@m83_sv_unit
 Xstates
 R2
-R5
+R17
 !i10b 1
 !s100 nOj19K9TQYG2`UE86K=Q]3
 IimT8U`mQbYV>O=:[57EWe1
@@ -338,38 +338,38 @@ w1768159888
 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv
 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv
 !i122 4
-R17
+R19
 VimT8U`mQbYV>O=:[57EWe1
 R11
 r1
 !s85 0
 31
-R12
+R18
 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv|
 !i113 0
 R15
 R16
 R1
-vtestbench
+vtb
 R2
-!s110 1768160087
+R5
 !i10b 1
-!s100 ]S`=2V01DU<CcS[nhBhDe1
-IXYM9aBl<1m]Oj@fVBNBEk3
+!s100 BKgI4djX5X@nQ;4]]1]JJ2
+I2l^4_5G9EVNnF9alZ_<FQ1
 S1
 R0
-w1768106314
+w1768179275
 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v
 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v
 !i122 7
-L0 1 17
+L0 2 18
 R6
 R11
 r1
 !s85 0
 31
-!s108 1768160087.000000
+R12
 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v|
 !i113 0
@@ -378,13 +378,13 @@ R15
 R1
 vZ80
 R2
-R5
+R17
 !i10b 1
-!s100 ;lBNa?5zMU`03C7J@QkeF2
-Ii[fPIURFTORP1fCifGhej1
+!s100 LZO?_PoDA`S3d0;SND:n53
+IifMOgBh5W2YTGbAdDdRE<2
 S1
 R0
-w1768135654
+w1768163601
 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv
 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv
 !i122 1
@@ -394,7 +394,7 @@ R11
 r1
 !s85 0
 31
-R12
+R18
 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv|
 !i113 0
@@ -403,12 +403,12 @@ R16
 R1
 n@z80
 vz80_ram
-!s110 1768160085
+!s110 1768183031
 !i10b 1
-!s100 MIfZkQBYNeJnimD5m9S0I3
-IU2ENd1YF2R5IihfC2cjkE0
+!s100 T5@mc5HTKlNOzBP@:Xk3Q1
+I4bORUlJT[HBLF>XK]nL9]0
 R0
-w1767665659
+w1768164403
 8D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v
 FD:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v
 !i122 0
@@ -418,7 +418,7 @@ R11
 r1
 !s85 0
 31
-!s108 1768160084.000000
+!s108 1768183031.000000
 !s107 D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation|D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v|
 !i113 0

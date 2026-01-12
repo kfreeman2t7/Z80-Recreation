@@ -43,5 +43,9 @@ bytecode = open("program.mif",'w')
 bytecode.write(mif)
 bytecode.close()
 
+bytecode = open("../CPU/program.mif",'w')
+bytecode.write(mif)
+bytecode.close()
+
 subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_cdb --update_mif ..\\Z80")
 subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_asm ..\\Z80")

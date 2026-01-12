@@ -33,7 +33,7 @@ endmodule
 	
 	
 	
-module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
 	//bus enums
 	parameter BUS_PC = 0;
 	parameter BUS_HL = 1;
@@ -55,7 +55,7 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 	reg [2:0] addr_reg;
 	
 	//i/o
-	input wire CLK, load, load_imm, rp_load, alu_op;
+	input wire CLK, RESET, load, load_imm, rp_load, alu_op;
 	input clock_cycle T;
 	input wire [data_size-1:0] ram_read, IR_READ, IR_WRITE;
 	input wire [ram_addr_size-1:0] PC;
@@ -113,9 +113,23 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 
 
 	always @(posedge CLK) begin	
+		if(RESET) begin
+			reg_arr[3'b000] <=  0;
+			reg_arr[3'b001] <=  0;
+			reg_arr[3'b010] <=  0;
+			reg_arr[3'b011] <=  0;
+			reg_arr[3'b100] <=  0;
+			reg_arr[3'b101] <=  0;
+			reg_arr[3'b110] <=  0;
+			reg_arr[3'b111] <=  0;
+			SP <= 0;
+			F <= 0;
+		end else begin
+		//update addr busses
+		hl_bus <= {reg_arr[H], reg_arr[L]}; //sync hl bus with clock
 		case(T)
 			T1: begin 
-				hl_bus <= {reg_arr[H], reg_arr[L]}; //sync hl bus with clock
+				
 				//load immediate
 				
 			
@@ -168,9 +182,11 @@ module RF(CLK, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read
 				end else begin
 					reg_arr[HL] <= reg_arr[HL];
 				end
+				
 			end
 	
 		endcase
+		end
 			
 	end
 	
