@@ -1,13 +1,14 @@
 nop
-ld B, 0x0
-ld A, 0x0
-ld HL, 0x4347
-ld (HL), 0x55
-ld C, 4
-ld B, (HL)
-ld A, H
-ADD A, 1
-ld H, A
-ld B, (HL)
+ld SP, 0x1000
+ld A, 0x10
+push AF
+add A, 8
+ld A, 0x83
+push AF
+and A, 7
+sub A, 3
+ld SP, 0x1002
+pop BC
+ld E, B
 END:    
     JR END

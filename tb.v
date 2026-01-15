@@ -7,7 +7,7 @@ module tb;
 	
 	initial begin
 		clk = 0;
-		#50000;
+		#10000;
 		$stop;
 		$finish;
 	end

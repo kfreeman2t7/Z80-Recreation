@@ -80,7 +80,44 @@ module decoder(code, ic);
 			3: begin
 				// TODO
 				case(z)
+					0: ic <= C_CON_RET;
+					1: begin case(q)
+							0: ic <= C_POP;
+							1: begin case(p)
+								0: ic <= C_RET;
+								1: ic <= C_EXX;
+								2: ic <= C_JUMP_HL;
+								3: ic <= C_LD_SP_HL;
+								default: ic <= C_NOP;
+							endcase end
+							default: ic <= C_NOP;
+						endcase end
+					2: ic <= C_CON_JUMP;
+					3: begin case(y)
+						0: ic <= C_JUMP_IMM;
+						1: ic <= C_PREFIX_CB;
+						2: ic <= C_OUT;
+						3: ic <= C_IN;
+						4: ic <= C_EX_SP_HL;
+						5: ic <= C_EX_DE_HL;
+						6: ic <= C_DI;
+						7: ic <= C_EI;
+						default: ic <= C_NOP;
+						endcase end
+					4: ic <= C_CON_CALL;
+					5: begin case(q)
+						0: ic <= C_PUSH;
+						1: begin case(p)
+							0: ic <= C_CALL;
+							1: ic <= C_PREFIX_DD;
+							2: ic <= C_PREFIX_ED;
+							3: ic <= C_PREFIX_FD;
+							default: ic <= C_NOP;
+							endcase end
+						default: ic <= C_NOP;
+						endcase end
 					6: ic <= C_ALU_IMM;
+					7: ic <= C_RESTART;
 					default: ic <= C_NOP;
 				endcase
 			end
@@ -93,10 +130,6 @@ endmodule
 
 
 module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, registers);
-
-	//bus enums
-	parameter BUS_PC = 0;
-	parameter BUS_HL = 1;
 	
 	parameter N_data = 8;
 	parameter N_ram_addr = 16;
@@ -119,6 +152,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 	
 	opcode OP_FETCH, OP_READ, OP_WRITE;
 	reg [7:0] IR_FETCH, IR_READ, IR_WRITE;
+	
 	reg REQ; assign REQ_out = REQ;
 	wire [2:0] addr_sel;
 	clock_cycle T;
@@ -141,27 +175,56 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 	wire rp_load = (
 		OP_WRITE == C_16BIT_LDIMM
 	);
+	wire rp2_load = (
+		OP_WRITE == C_POP
+	);
 	//read control signals
 	wire load_imm = (
 	OP_READ == C_LOAD_IMM 
 	|| OP_READ == C_16BIT_LDIMM 
 	|| OP_READ == C_ALU_IMM
 	|| OP_READ == C_JR
+	|| OP_READ == C_LOAD_INDIRECT
+	|| OP_READ == C_POP
 	);
+	
+	wire sp_read = (
+		OP_READ == C_POP
+	);
+	
+	wire load_indirect = 
+	(
+		OP_WRITE == C_LOAD_INDIRECT
+	);
+	
+	wire write_indirect = 
+	(
+		OP_WRITE == C_WRITE_INDIRECT
+	);
+	
+	wire sp_push = (
+		OP_WRITE == C_PUSH
+	);
+	
+	wire sp_pop = (
+		OP_WRITE == C_POP
+	);
+	
+	wire use_indirect_addr = (OP_READ == C_LOAD_INDIRECT) || (OP_READ == C_WRITE_INDIRECT);
 	
 	wire load_pc = (OP_WRITE == C_JR);
 	
-	wire op_is_store = (OP_FETCH == C_LOAD && IR_FETCH[2:0] == 3'b110);
+	wire op_is_store = (OP_FETCH == C_LOAD && IR_FETCH[2:0] == 3'b110) || (OP_FETCH == C_WRITE_INDIRECT);
 	wire read_conflict = op_is_store && (OP_READ != C_NOP);
 	
 	wire insert_gap = read_conflict;
 	
-	wire fetch_enable = (ram_addr == PC) && ~RESET && ~insert_gap;
+	wire fetch_enable = (ram_addr == PC) && ~RESET && ~insert_gap && (OP_READ != C_PUSH);
 	
 	wire [7:0] displacement;
 	wire pending_req = (ACK == 0) && (REQ == 1);
 	
-	wire data_is_imm = load_imm || rp_load;
+	wire data_is_imm = load_imm || rp_load || rp2_load;
 	wire valid_data = ~data_is_imm;
 
 	always @ (posedge CLK) begin
@@ -223,7 +286,7 @@ module SM83(CLK, REQ_out, ACK, ram_wren, write_data, addr_bus, data_bus, RESET, 
 	//RF
 	reg wren_peek;
 	assign wren_peek = ram_wren;
-	RF regfile(CLK, RESET, T, PC, IR_READ, IR_WRITE, write_data, ram_wren, data_bus, ram_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+	RF regfile(CLK, RESET, T, PC, IR_READ, IR_WRITE, write_data, ram_wren, data_bus, ram_addr, addr_sel, load, load_imm, use_indirect_addr, load_indirect, write_indirect, rp_load, rp2_load, alu_op, sp_push, sp_pop, sp_read, displacement, registers);
 	
 endmodule
 

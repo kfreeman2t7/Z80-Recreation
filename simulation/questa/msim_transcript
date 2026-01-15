@@ -26,57 +26,47 @@
 # 
 # vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:11 on Jan 11,2026
+# Start time: 18:18:03 on Jan 15,2026
 # vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v 
 # -- Compiling module z80_ram
 # 
 # Top level modules:
 # 	z80_ram
-# End time: 20:57:11 on Jan 11,2026, Elapsed time: 0:00:00
+# End time: 18:18:03 on Jan 15,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:12 on Jan 11,2026
+# Start time: 18:18:04 on Jan 15,2026
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv 
 # -- Compiling module Z80
 # 
 # Top level modules:
 # 	Z80
-# End time: 20:57:12 on Jan 11,2026, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:12 on Jan 11,2026
-# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv 
-# -- Compiling module register_mux
-# 
-# Top level modules:
-# 	register_mux
-# End time: 20:57:12 on Jan 11,2026, Elapsed time: 0:00:00
+# End time: 18:18:04 on Jan 15,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:12 on Jan 11,2026
+# Start time: 18:18:04 on Jan 15,2026
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv 
 # -- Compiling module arbiter
 # 
 # Top level modules:
 # 	arbiter
-# End time: 20:57:12 on Jan 11,2026, Elapsed time: 0:00:00
+# End time: 18:18:04 on Jan 15,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:12 on Jan 11,2026
+# Start time: 18:18:04 on Jan 15,2026
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv 
 # -- Compiling package states
 # 
 # Top level modules:
 # 	--none--
-# End time: 20:57:12 on Jan 11,2026, Elapsed time: 0:00:00
+# End time: 18:18:04 on Jan 15,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:12 on Jan 11,2026
+# Start time: 18:18:04 on Jan 15,2026
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv 
 # -- Compiling package SM83_sv_unit
 # -- Importing package states
@@ -85,11 +75,11 @@
 # 
 # Top level modules:
 # 	SM83
-# End time: 20:57:13 on Jan 11,2026, Elapsed time: 0:00:01
+# End time: 18:18:04 on Jan 15,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:13 on Jan 11,2026
+# Start time: 18:18:04 on Jan 15,2026
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv 
 # -- Compiling package CPU_Internals_sv_unit
 # -- Importing package states
@@ -104,23 +94,131 @@
 # 	gb_clock
 # 	RF
 # 	IDU
-# End time: 20:57:13 on Jan 11,2026, Elapsed time: 0:00:00
+# End time: 18:18:05 on Jan 15,2026, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # 
 # vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:57:13 on Jan 11,2026
+# Start time: 18:18:05 on Jan 15,2026
 # vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v 
 # -- Compiling module tb
 # 
 # Top level modules:
 # 	tb
-# End time: 20:57:13 on Jan 11,2026, Elapsed time: 0:00:00
+# End time: 18:18:05 on Jan 15,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb
 # vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb 
-# Start time: 20:57:13 on Jan 11,2026
+# Start time: 18:18:05 on Jan 15,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vopt-143) Recognized 1 FSM in module "SM83(fast)".
+# ** Error (suppressible): D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv(269): (vopt-12003) Variable 'F' written by continuous and procedural assignments. See D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv(288). 
+# Optimization failed
+# ** Error: (vopt-2064) Compiler back-end code generation process terminated with code 12.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=2, Warnings=0.
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./Z80_run_msim_rtl_systemverilog.do PAUSED at line 17
+do Z80_run_msim_rtl_systemverilog.do
+# transcript on
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Questa Intel Starter FPGA Edition-64 vmap 2021.2 Lib Mapping Utility 2021.04 Apr 14 2021
+# vmap work rtl_work 
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:53 on Jan 15,2026
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/z80_ram.v 
+# -- Compiling module z80_ram
+# 
+# Top level modules:
+# 	z80_ram
+# End time: 18:21:53 on Jan 15,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:53 on Jan 15,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Z80.sv 
+# -- Compiling module Z80
+# 
+# Top level modules:
+# 	Z80
+# End time: 18:21:53 on Jan 15,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:53 on Jan 15,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/Arbiter.sv 
+# -- Compiling module arbiter
+# 
+# Top level modules:
+# 	arbiter
+# End time: 18:21:54 on Jan 15,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:54 on Jan 15,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/states.sv 
+# -- Compiling package states
+# 
+# Top level modules:
+# 	--none--
+# End time: 18:21:54 on Jan 15,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:54 on Jan 15,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/SM83.sv 
+# -- Compiling package SM83_sv_unit
+# -- Importing package states
+# -- Compiling module decoder
+# -- Compiling module SM83
+# 
+# Top level modules:
+# 	SM83
+# End time: 18:21:54 on Jan 15,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:54 on Jan 15,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv 
+# -- Compiling package CPU_Internals_sv_unit
+# -- Importing package states
+# -- Compiling module onehot_decoder
+# -- Compiling module gb_clock
+# -- Compiling module RF
+# -- Compiling module ALU
+# -- Compiling module IDU
+# 
+# Top level modules:
+# 	onehot_decoder
+# 	gb_clock
+# 	RF
+# 	IDU
+# End time: 18:21:54 on Jan 15,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation {D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 18:21:54 on Jan 15,2026
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation" D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v 
+# -- Compiling module tb
+# 
+# Top level modules:
+# 	tb
+# End time: 18:21:54 on Jan 15,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  tb
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs=""+acc"" tb 
+# Start time: 18:18:05 on Jan 15,2026
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vopt-143) Recognized 1 FSM in module "SM83(fast)".
 # ** Warning: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(15): (vopt-2685) [TFMPC] - Too few port connections for 'cpu'.  Expected 26, found 2.
@@ -148,7 +246,7 @@
 # ** Warning: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'ADC_SDI'.
 # ** Warning: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'ADC_SCK'.
 # ** Warning: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(15): (vopt-2718) [TFMPC] - Missing connection for port 'ADC_CONVST'.
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=25.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=2, Warnings=25.
 # Loading sv_std.std
 # Loading work.tb(fast)
 # Loading work.Z80(fast)
@@ -167,12 +265,7 @@
 # Loading work.SM83(fast)
 # Loading work.decoder(fast)
 # Loading work.RF(fast)
-# Loading work.register_mux(fast)
 # Loading work.ALU(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (48) for port 'input_regs'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
-#    Time: 0 ps  Iteration: 0  Instance: /tb/cpu/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'sel'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
-#    Time: 0 ps  Iteration: 0  Instance: /tb/cpu/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
 # 
 # add wave *
 # view structure
@@ -181,10 +274,47 @@
 # .main_pane.objects.interior.cs.body.tree
 # run -all
 # ** Note: $stop    : D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(11)
-#    Time: 50 us  Iteration: 0  Instance: /tb
+#    Time: 10 us  Iteration: 0  Instance: /tb
 # Break in Module tb at D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v line 11
-do D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/questa/wave.do
-restart -f
+do start.do
+# do D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/simulation/questa/wave.do
+# onerror {resume}
+# quietly WaveActivateNextPane {} 0
+# add wave -noupdate /tb/clk
+# add wave -noupdate /tb/cpu/core/regfile/ram_read_addr
+# add wave -noupdate /tb/cpu/core/regfile/ram_write_data
+# add wave -noupdate /tb/cpu/core/regfile/ram_wren
+# add wave -noupdate /tb/cpu/core/regfile/ram_read
+# add wave -noupdate -group IR /tb/cpu/core/IR_FETCH
+# add wave -noupdate -group IR /tb/cpu/core/IR_READ
+# add wave -noupdate -group IR /tb/cpu/core/IR_WRITE
+# add wave -noupdate -divider <NULL>
+# add wave -noupdate /tb/cpu/core/OP_FETCH
+# add wave -noupdate /tb/cpu/core/OP_READ
+# add wave -noupdate /tb/cpu/core/OP_WRITE
+# add wave -noupdate -divider <NULL>
+# add wave -noupdate -expand /tb/cpu/core/regfile/reg_arr
+# add wave -noupdate /tb/cpu/core/regfile/SP
+# add wave -noupdate /tb/cpu/core/regfile/F
+# TreeUpdate [SetDefaultTree]
+# WaveRestoreCursors {{Cursor 1} {1912214 ps} 0}
+# quietly wave cursor active 1
+# configure wave -namecolwidth 235
+# configure wave -valuecolwidth 100
+# configure wave -justifyvalue left
+# configure wave -signalnamewidth 0
+# configure wave -snapdistance 10
+# configure wave -datasetprefix 0
+# configure wave -rowmargin 4
+# configure wave -childrowmargin 2
+# configure wave -gridoffset 0
+# configure wave -gridperiod 1
+# configure wave -griddelta 40
+# configure wave -timeline 0
+# configure wave -timelineunits ns
+# update
+# WaveRestoreZoom {1341527 ps} {2366458 ps}
+# restart -f
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=25.
@@ -205,45 +335,8 @@ restart -f
 # Loading work.SM83(fast)
 # Loading work.decoder(fast)
 # Loading work.RF(fast)
-# Loading work.register_mux(fast)
 # Loading work.ALU(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (48) for port 'input_regs'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
-#    Time: 0 ps  Iteration: 0  Instance: /tb/cpu/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'sel'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
-#    Time: 0 ps  Iteration: 0  Instance: /tb/cpu/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
-run -all
+# run -all
 # ** Note: $stop    : D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(11)
-#    Time: 50 us  Iteration: 0  Instance: /tb
-# Break in Module tb at D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v line 11
-add wave -position end  sim:/tb/cpu/core/regfile/hl_bus
-restart -f
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# ** Note: (vsim-8009) Loading existing optimized design _opt
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=25.
-# Loading work.tb(fast)
-# Loading work.Z80(fast)
-# Loading work.states(fast)
-# Loading work.CPU_Internals_sv_unit(fast)
-# Loading work.gb_clock(fast)
-# Loading work.arbiter(fast)
-# Loading work.arbiter(fast__1)
-# Loading work.arbiter(fast__2)
-# Loading work.z80_ram(fast)
-# Loading altera_mf_ver.altsyncram(fast)
-# Loading altera_mf_ver.altsyncram_body(fast)
-# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES(fast)
-# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION(fast)
-# Loading work.SM83_sv_unit(fast)
-# Loading work.SM83(fast)
-# Loading work.decoder(fast)
-# Loading work.RF(fast)
-# Loading work.register_mux(fast)
-# Loading work.ALU(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (48) for port 'input_regs'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
-#    Time: 0 ps  Iteration: 0  Instance: /tb/cpu/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
-# ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (3) for port 'sel'. The port definition is at: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/util.sv(1).
-#    Time: 0 ps  Iteration: 0  Instance: /tb/cpu/core/regfile/addr_mux File: D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/CPU/CPU_Internals.sv Line: 103
-run -all
-# ** Note: $stop    : D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v(11)
-#    Time: 50 us  Iteration: 0  Instance: /tb
+#    Time: 10 us  Iteration: 0  Instance: /tb
 # Break in Module tb at D:/DE10-Nano_v.1.1.0_HWrevE_SystemCD/Projects/Z80-Recreation/tb.v line 11

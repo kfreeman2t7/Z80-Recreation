@@ -33,10 +33,9 @@ endmodule
 	
 	
 	
-module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read_addr, addr_sel, load, load_imm, rp_load, alu_op, displacement, registers);
+module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, ram_read_addr, addr_sel, load, load_imm, use_indirect_addr, load_indirect, write_indirect, rp_load, rp2_load, alu_op, sp_push, sp_pop, sp_read, displacement, registers);
 	//bus enums
-	parameter BUS_PC = 0;
-	parameter BUS_HL = 1;
+	
 	
 	parameter data_size = 8;
 	parameter addr_size = 3;
@@ -53,9 +52,10 @@ module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, r
 	reg [ram_addr_size-1:0] SP, ram_write_addr_reg; //special resigsters
 	reg [data_size-1:0] reg_arr [(1<<addr_size)-1:0]; //general purpose registers
 	reg [2:0] addr_reg;
+	reg [data_size-1:0] F = 0;
 	
 	//i/o
-	input wire CLK, RESET, load, load_imm, rp_load, alu_op;
+	input wire CLK, RESET, load, load_imm, use_indirect_addr, load_indirect, write_indirect, rp_load, rp2_load, alu_op, sp_push, sp_pop, sp_read;
 	input clock_cycle T;
 	input wire [data_size-1:0] ram_read, IR_READ, IR_WRITE;
 	input wire [ram_addr_size-1:0] PC;
@@ -81,32 +81,58 @@ module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, r
 	
 	
 	//data wires
+	reg [15:0] rp_data = 0, rp2_data = 0;
+	always @(*) begin
+		case(rp_addr)
+			0: rp_data <= {reg_arr[0],reg_arr[1]};
+			1: rp_data <= {reg_arr[2],reg_arr[3]};
+			2: rp_data <= {reg_arr[4],reg_arr[5]};
+			3: rp_data <= SP;
+			default: rp_data <= 0;
+		endcase
+		
+		case(rp_addr)
+			0: rp2_data <= {reg_arr[0],reg_arr[1]};
+			1: rp2_data <= {reg_arr[2],reg_arr[3]};
+			2: rp2_data <= {reg_arr[4],reg_arr[5]};
+			3: rp2_data <= {reg_arr[A],F};
+			default: rp2_data <= 0;
+		endcase
+	end
 	reg [ram_addr_size-1:0] hl_bus;
-	wire [2:0] [ram_addr_size-1:0] ram_read_bus;
+	
+	
+	
+	wire [7:0] [ram_addr_size-1:0] ram_read_bus;
+	assign ram_read_bus[BUS_RP] = rp_data;
 	assign ram_read_bus[BUS_PC] = PC;
-	assign ram_read_bus[BUS_HL] = {reg_arr[H], reg_arr[L]};//hl_bus;
+	assign ram_read_bus[BUS_HL] = {reg_arr[H], reg_arr[L]};
+	assign ram_read_bus[BUS_SP] = SP;
 	
 	wire [ram_addr_size-1:0] ram_write_addr = ram_write_addr_reg;
 	assign ram_write = ram_write_data;
 	
-	wire use_bus_hl = (IR_READ[2:0] == HL && ~load_imm) || (IR_WRITE[5:3] == HL);
-	assign ram_wren = (IR_WRITE[5:3] == HL);
+	wire use_bus_hl = (IR_READ[2:0] == HL && ~load_imm) || (IR_WRITE[5:3] == HL && load);
+	assign ram_wren = ((load && IR_WRITE[5:3] == HL) || write_indirect || sp_push);
 	
 	always @(*) begin
-		if(use_bus_hl) begin
+		if(use_indirect_addr || load_indirect || write_indirect) begin
+			addr_reg <= BUS_RP;
+		end else if(sp_read || sp_push || sp_pop) begin
+			addr_reg <= BUS_SP;
+		end else if(use_bus_hl) begin
 			addr_reg <= BUS_HL;
 		end else begin
 			addr_reg <= BUS_PC;
 		end
 	end
 	
-	register_mux #(.reg_size(ram_addr_size), .sel_size(2)) addr_mux(ram_read_bus, ram_read_addr, addr_sel);
+	assign ram_read_addr = ram_read_bus[addr_sel];
 	
 	wire [data_size-1:0] imm = reg_arr[3'b110];
 	assign displacement = imm;
 	
 	//ALU
-	reg [data_size-1:0] F;
 	wire [data_size-1:0] alu_buffer, flag_buffer;
 	ALU #(.bit_size(8)) arithlogic(CLK,reg_arr[A],reg_arr[addr_B],F,alu_buffer,addr_A,flag_buffer);
 	
@@ -129,14 +155,16 @@ module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, r
 		hl_bus <= {reg_arr[H], reg_arr[L]}; //sync hl bus with clock
 		case(T)
 			T1: begin 
-				
-				//load immediate
-				
-			
+				if(sp_push) begin
+					ram_write_data <= rp2_data[7:0];
+				end
 			end
 			T2: begin 
-			
-				if(alu_op) begin
+				
+				if(sp_push) begin
+					ram_write_data <= rp2_data[15:8];
+					SP <= SP + 1;
+				end else if(alu_op) begin
 					F <= flag_buffer;
 					reg_arr[A] <= alu_buffer;
 				end else if(load) begin //ld
@@ -155,16 +183,39 @@ module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, r
 						0: reg_arr[1] <= reg_arr[HL];
 						1: reg_arr[3] <= reg_arr[HL];
 						2: reg_arr[5] <= reg_arr[HL];
-						3: SP[7:0] <= ram_read;
+						3: SP[7:0] <= reg_arr[HL];
 					endcase
 					reg_arr[0] <= reg_arr[0];
 					reg_arr[2] <= reg_arr[2];
 					reg_arr[4] <= reg_arr[4];
 					SP[15:8] <= SP[15:8];
+				end else if(sp_pop) begin //rp low
+					case(rp_addr)
+						0: reg_arr[1] <= reg_arr[HL];
+						1: reg_arr[3] <= reg_arr[HL];
+						2: reg_arr[5] <= reg_arr[HL];
+						3: reg_arr[A] <= reg_arr[HL];
+					endcase
+					reg_arr[0] <= reg_arr[0];
+					reg_arr[2] <= reg_arr[2];
+					reg_arr[4] <= reg_arr[4];
+					F <= F;
+				end else if(write_indirect) begin
+					ram_write_data <= reg_arr[A];
 				end
 			end
 			T3: begin 
-				if(rp_load && ~load) begin //rp high
+				if(load_indirect) begin
+					reg_arr[A] <= ram_read;
+				end
+				
+				if(sp_read || sp_pop) begin
+					SP <= SP + 1;
+				end
+				
+				if(sp_push) begin
+					SP <= SP + 1;
+				end if(rp_load && ~load) begin //rp high
 					case(rp_addr)
 						0: reg_arr[0] <= ram_read;
 						1: reg_arr[2] <= ram_read;
@@ -172,6 +223,17 @@ module RF(CLK, RESET, T, PC, IR_READ, IR_WRITE, ram_write, ram_wren, ram_read, r
 						3: SP[15:8] <= ram_read;
 					endcase
 					SP[7:0] <= SP[7:0];
+					reg_arr[1] <= reg_arr[1];
+					reg_arr[3] <= reg_arr[3];
+					reg_arr[5] <= reg_arr[5];
+				end else if(sp_pop && ~load) begin //rp high
+					case(rp_addr)
+						0: reg_arr[0] <= ram_read;
+						1: reg_arr[2] <= ram_read;
+						2: reg_arr[4] <= ram_read;
+						3: F <= ram_read;
+					endcase
+					reg_arr[A] <= reg_arr[A];
 					reg_arr[1] <= reg_arr[1];
 					reg_arr[3] <= reg_arr[3];
 					reg_arr[5] <= reg_arr[5];
@@ -204,19 +266,23 @@ module ALU(CLK,A,r,f,reg_out,mode,flags_w);
 	
 	wire [bit_size:0] adc = r + f[0];
 
-	reg [bit_size-1:0] res, F;
+	reg [bit_size-1:0] res, F = 0;
 	
-	assign F[N] = f[N];
-	assign F[Z] = (res == 0);
-	assign F[S] = ~res[7];
-	assign F[H] = (A[3] == 1) & (A[4] == 1);
+	assign flags_w[N] = f[N];
+	assign flags_w[Z] = (res == 0);
+	assign flags_w[S] = ~res[7];
+	assign flags_w[H] = (A[3] == 1) & (A[4] == 1);
 	
-	assign F[PV] = ( 
+	assign flags_w[PV] = ( 
 	(mode == 0) & (A[7] == r[7]) & (res[7] != A[7]) |
 	(mode == 1 | mode == 7) & (A[7] == adc[7]) & (res[7] != A[7]) |
 	(mode == 2) & (A[7] != r[7]) & (res[7] != A[7]) |
 	(mode == 3) & (A[7] != adc[7]) & (res[7] != A[7])
 	);
+	
+	assign flags_w[C] = F[C];
+	assign flags_w[x] = 0;
+	assign flags_w[y] = 0;
 	
 	
 	

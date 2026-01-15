@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 def proper_hex(x):
     return hex(x).replace("0x","").upper()
@@ -47,5 +48,10 @@ bytecode = open("../CPU/program.mif",'w')
 bytecode.write(mif)
 bytecode.close()
 
-subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_cdb --update_mif ..\\Z80")
-subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_asm ..\\Z80")
+if len(sys.argv) > 1 and sys.argv[1].strip() == "skip":
+    print("skipping recompilation")
+else: 
+    subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_cdb --update_mif ..\\Z80")
+    subprocess.run("D:\\IntelFPGA_lite\\23.1std\\quartus\\bin64\\quartus_asm ..\\Z80")
+
+print("done generating mif")

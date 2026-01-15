@@ -1,4 +1,9 @@
 package states;
+//bus states
+parameter BUS_RP = 0;
+parameter BUS_PC = 1;
+parameter BUS_HL = 2;
+parameter BUS_SP = 3;
 //clock cycles
 typedef enum {
 		T1,
